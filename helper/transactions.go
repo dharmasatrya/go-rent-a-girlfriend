@@ -85,7 +85,7 @@ func Transaction(sender_id, recipient_id uint, amount int) error {
 
 func CreateXenditInvoice(invoiceReq models.XenditInvoiceRequest) (map[string]interface{}, error) {
 	// Prepare the request payload
-	xenditUrl := os.Getenv("XENDIT_URL")
+	xenditUrl := os.Getenv("XENDIT_INVOICE_URL")
 	payload := map[string]interface{}{
 		"external_id": invoiceReq.ExternalId,
 		"amount":      invoiceReq.Amount,
@@ -101,6 +101,64 @@ func CreateXenditInvoice(invoiceReq models.XenditInvoiceRequest) (map[string]int
 			"invoice_paid":    []string{"whatsapp", "email"},
 		},
 		"currency": "IDR",
+	}
+
+	// Convert payload to JSON
+	jsonData, err := json.Marshal(payload)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling JSON: %v", err)
+	}
+
+	// Create the request
+	request, err := http.NewRequest("POST", xenditUrl, bytes.NewBuffer(jsonData))
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %v", err)
+	}
+
+	// Get API key from environment variable and encode it
+	apiKey := os.Getenv("XENDIT_API_KEY")
+	if apiKey == "" {
+		return nil, fmt.Errorf("XENDIT_API_KEY not found in environment variables")
+	}
+	encodedKey := base64.StdEncoding.EncodeToString([]byte(apiKey))
+
+	// Set headers
+	request.Header.Set("Authorization", "Basic "+encodedKey)
+	request.Header.Set("Content-Type", "application/json")
+
+	// Make the request
+	client := &http.Client{}
+	resp, err := client.Do(request)
+	if err != nil {
+		return nil, fmt.Errorf("error making request: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// Parse the response
+	var result map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, fmt.Errorf("error decoding response: %v", err)
+	}
+
+	// Check if response indicates an error
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
+		return nil, fmt.Errorf("API request failed with status %d: %v", resp.StatusCode, result)
+	}
+
+	return result, nil
+}
+
+func CreateXenditDisbursement(disbursementReq models.XenditDisbursementRequest) (map[string]interface{}, error) {
+	// Prepare the request payload
+	xenditUrl := os.Getenv("XENDIT_DISBURSEMENT_URL")
+	payload := map[string]interface{}{
+		"external_id":         disbursementReq.ExternalId,
+		"amount":              disbursementReq.Amount,
+		"bank_code":           disbursementReq.BankCode,
+		"account_holder_name": disbursementReq.AccountHolderName,
+		"account_number":      disbursementReq.BankAccountNumber,
+		"description":         disbursementReq.Description,
+		"email_to":            []string{disbursementReq.Email},
 	}
 
 	// Convert payload to JSON

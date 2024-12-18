@@ -24,6 +24,7 @@ type Wallet struct {
 	UserID            uint           `json:"user_id" example:"1" binding:"required"`
 	BankCode          string         `json:"bank_code" example:"BCA" binding:"required"`
 	BankAccountNumber string         `json:"bank_account_number" example:"1234567890" binding:"required"`
+	BankAccountName   string         `json:"bank_account_name" example:"Dharma Satrya" binding:"required"`
 	Balance           int            `json:"balance"`
 	User              User           `json:"-" swaggerignore:"true"`
 	CreatedAt         time.Time      `json:"created_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
@@ -155,4 +156,18 @@ type InternalTransaction struct {
 type XenditCallback struct {
 	ExternalId string `json:"external_id"`
 	Status     string `json:"status"`
+}
+
+type WithdrawalRequest struct {
+	Amount int
+}
+
+type XenditDisbursementRequest struct {
+	ExternalId        string
+	Amount            int
+	BankCode          string
+	AccountHolderName string
+	BankAccountNumber string
+	Description       string
+	Email             string
 }

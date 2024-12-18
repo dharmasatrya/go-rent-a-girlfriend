@@ -96,6 +96,68 @@ func DepositFunds(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
+func WithdrawFunds(c echo.Context) error {
+	var req models.WithdrawalRequest
+
+	if err := c.Bind(&req); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
+	}
+
+	claims, err := helper.GetClaimsFromToken(c)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
+	}
+
+	userID := uint(claims["user_id"].(float64))
+	externalId, err := gonanoid.New()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error generating invoice UUID")
+	}
+
+	var user models.User
+	if err := db.GormDB.Where("id = ?", userID).Take(&user).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching userdata")
+	}
+
+	var wallet models.Wallet
+	if err := db.GormDB.Where("user_id = ?", userID).First(&wallet).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching wallet details")
+	}
+
+	if wallet.Balance < req.Amount {
+		return echo.NewHTTPError(http.StatusBadRequest, "Insufficient balance")
+	}
+
+	disbursementRequest := models.XenditDisbursementRequest{
+		ExternalId:        externalId,
+		Amount:            req.Amount,
+		Description:       "Withdrawal",
+		BankCode:          "BCA",
+		AccountHolderName: wallet.BankAccountName,
+		BankAccountNumber: wallet.BankAccountNumber,
+		Email:             user.Email,
+	}
+
+	InternalTransaction := models.InternalTransaction{
+		UserID:     userID,
+		ExternalId: externalId,
+		Amount:     req.Amount,
+		Status:     "PENDING",
+		Type:       "MONEY_OUT",
+	}
+
+	if err := db.GormDB.Create(&InternalTransaction).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error creating profile")
+	}
+
+	response, err := helper.CreateXenditDisbursement(disbursementRequest)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to create payment: "+err.Error())
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
 func XenditCallbackHandler(c echo.Context) error {
 	var req models.XenditCallback
 
