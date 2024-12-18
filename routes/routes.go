@@ -34,5 +34,6 @@ func Init(e *echo.Echo) {
 	w.POST("/withdrawal", handler.WithdrawFunds)
 	w.POST("/deposit", handler.DepositFunds)
 
-	e.POST("/xenditcallback", handler.XenditCallbackHandler)
+	e.POST("/xenditcallback/invoice", handler.XenditInvoiceCallbackHandler)
+	e.POST("/xenditcallback/disbursement", handler.XenditDisbursementCallbackHandler)
 }

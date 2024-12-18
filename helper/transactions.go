@@ -222,3 +222,20 @@ func SuccessfulAddFund(user_id uint, amount int) error {
 
 	return nil
 }
+
+func SuccessfulWithdraw(user_id uint, amount int) error {
+
+	var wallet models.Wallet
+	if err := db.GormDB.Table("wallets").Where("user_id = ?", user_id).First(&wallet).Error; err != nil {
+		return fmt.Errorf("failed to fetch wallet data: %v", err)
+	}
+
+	if err := db.GormDB.
+		Table("wallets").
+		Where("user_id = ?", user_id).
+		Update("balance", wallet.Balance-amount).Error; err != nil {
+		return fmt.Errorf("failed to update wallet: %v", err)
+	}
+
+	return nil
+}
