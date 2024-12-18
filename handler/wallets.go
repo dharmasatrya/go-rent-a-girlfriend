@@ -10,6 +10,17 @@ import (
 	gonanoid "github.com/matoous/go-nanoid/v2"
 )
 
+// CreateWallet godoc
+// @Summary Create a wallet
+// @Description Registers a new wallet
+// @Tags wallet
+// @Accept json
+// @Produce json
+// @Param user body models.Wallet true "User wallet"
+// @Success 201 {object} models.Wallet
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /wallets [post]
 func CreateWallet(c echo.Context) error {
 	var req models.Wallet
 
@@ -38,6 +49,17 @@ func CreateWallet(c echo.Context) error {
 	return c.JSON(http.StatusCreated, req)
 }
 
+// DepositFunds godoc
+// @Summary Create a deposit
+// @Description Create a deposit
+// @Tags wallet
+// @Accept json
+// @Produce json
+// @Param user body models.DepostitRequest true "Deposit amount"
+// @Success 200 {object} models.Wallet
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /wallets/deposit [post]
 func DepositFunds(c echo.Context) error {
 	var req models.DepostitRequest
 
@@ -96,6 +118,17 @@ func DepositFunds(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
+// CreateWallet godoc
+// @Summary Create a withdrawal
+// @Description Create a withdrawal
+// @Tags wallet
+// @Accept json
+// @Produce json
+// @Param user body models.WithdrawalRequest true "withdrawal"
+// @Success 200 {object} models.Wallet
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /wallets/withdrawal [post]
 func WithdrawFunds(c echo.Context) error {
 	var req models.WithdrawalRequest
 
