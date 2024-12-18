@@ -17,14 +17,14 @@ var jwtSecret = []byte("secret")
 
 // UserRegister godoc
 // @Summary Register a new user
-// @Description Registers a new user with full name, email, username, password, and age
+// @Description Registers a new user with username, email, password and role
 // @Tags user
 // @Accept json
 // @Produce json
 // @Param user body models.User true "User Registration Information"
-// @Success 201 {object} models.User "User created successfully"
-// @Failure 400 {object} map[string]string "Invalid request payload or duplicate email/username"
-// @Failure 500 {object} map[string]string "Internal server error"
+// @Success 201 {object} models.User
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
 // @Router /users/register [post]
 func UserRegister(c echo.Context) error {
 	var req models.User
@@ -66,10 +66,10 @@ func UserRegister(c echo.Context) error {
 // @Tags user
 // @Accept json
 // @Produce json
-// @Param credentials body models.LoginRequest true "User login credentials"
-// @Success 200 {object} map[string]string "JWT token"
-// @Failure 400 {object} map[string]string "Invalid credentials"
-// @Failure 500 {object} map[string]string "Internal server error"
+// @Param credentials body models.LoginRequest true "Login Credentials"
+// @Success 200 {object} map[string]string{token=string}
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
 // @Router /users/login [post]
 func UserLogin(c echo.Context) error {
 	var req models.LoginRequest
@@ -115,12 +115,12 @@ func UserLogin(c echo.Context) error {
 // @Tags profile
 // @Accept json
 // @Produce json
-// @Security BearerToken
-// @Param profile body models.Girl true "Girl profile information"
-// @Success 201 {object} models.Girl "Profile created successfully"
-// @Failure 400 {object} map[string]string "Invalid request payload"
-// @Failure 409 {object} map[string]string "Profile already exists"
-// @Failure 500 {object} map[string]string "Internal server error"
+// @Security Bearer
+// @Param profile body models.Girl true "Girl Profile Information"
+// @Success 201 {object} models.Girl
+// @Failure 400 {object} map[string]string
+// @Failure 409 {object} map[string]string
+// @Failure 500 {object} map[string]string
 // @Router /users/profile/girl [post]
 func UserCreateGirlProfile(c echo.Context) error {
 	var req models.Girl
@@ -155,12 +155,12 @@ func UserCreateGirlProfile(c echo.Context) error {
 // @Tags profile
 // @Accept json
 // @Produce json
-// @Security BearerToken
-// @Param profile body models.Boy true "Boy profile information"
-// @Success 201 {object} models.Boy "Profile created successfully"
-// @Failure 400 {object} map[string]string "Invalid request payload"
-// @Failure 409 {object} map[string]string "Profile already exists"
-// @Failure 500 {object} map[string]string "Internal server error"
+// @Security Bearer
+// @Param profile body models.Boy true "Boy Profile Information"
+// @Success 201 {object} models.Boy
+// @Failure 400 {object} map[string]string
+// @Failure 409 {object} map[string]string
+// @Failure 500 {object} map[string]string
 // @Router /users/profile/boy [post]
 func UserCreateBoyProfile(c echo.Context) error {
 	var req models.Boy

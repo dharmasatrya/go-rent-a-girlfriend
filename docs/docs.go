@@ -9,10 +9,15 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
+        "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "Developer Name",
-            "url": "http://example.com",
-            "email": "developer@example.com"
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
         "version": "{{.Version}}"
     },
@@ -34,7 +39,7 @@ const docTemplate = `{
                 "summary": "Login user",
                 "parameters": [
                     {
-                        "description": "User login credentials",
+                        "description": "Login Credentials",
                         "name": "credentials",
                         "in": "body",
                         "required": true,
@@ -45,16 +50,28 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "JWT token",
+                        "description": "OK",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
-                                "type": "string"
+                                "allOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "token": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     },
                     "400": {
-                        "description": "Invalid credentials",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -63,7 +80,7 @@ const docTemplate = `{
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -78,7 +95,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "BearerToken": []
+                        "Bearer": []
                     }
                 ],
                 "description": "Creates a profile for a boy user",
@@ -94,7 +111,7 @@ const docTemplate = `{
                 "summary": "Create boy profile",
                 "parameters": [
                     {
-                        "description": "Boy profile information",
+                        "description": "Boy Profile Information",
                         "name": "profile",
                         "in": "body",
                         "required": true,
@@ -105,13 +122,13 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Profile created successfully",
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.Boy"
                         }
                     },
                     "400": {
-                        "description": "Invalid request payload",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -120,7 +137,7 @@ const docTemplate = `{
                         }
                     },
                     "409": {
-                        "description": "Profile already exists",
+                        "description": "Conflict",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -129,7 +146,7 @@ const docTemplate = `{
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -144,7 +161,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "BearerToken": []
+                        "Bearer": []
                     }
                 ],
                 "description": "Creates a profile for a girl user",
@@ -160,7 +177,7 @@ const docTemplate = `{
                 "summary": "Create girl profile",
                 "parameters": [
                     {
-                        "description": "Girl profile information",
+                        "description": "Girl Profile Information",
                         "name": "profile",
                         "in": "body",
                         "required": true,
@@ -171,13 +188,13 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Profile created successfully",
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.Girl"
                         }
                     },
                     "400": {
-                        "description": "Invalid request payload",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -186,7 +203,7 @@ const docTemplate = `{
                         }
                     },
                     "409": {
-                        "description": "Profile already exists",
+                        "description": "Conflict",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -195,7 +212,7 @@ const docTemplate = `{
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -208,7 +225,7 @@ const docTemplate = `{
         },
         "/users/register": {
             "post": {
-                "description": "Registers a new user with full name, email, username, password, and age",
+                "description": "Registers a new user with username, email, password and role",
                 "consumes": [
                     "application/json"
                 ],
@@ -232,13 +249,13 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "User created successfully",
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.User"
                         }
                     },
                     "400": {
-                        "description": "Invalid request payload or duplicate email/username",
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -247,7 +264,7 @@ const docTemplate = `{
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "object",
                             "additionalProperties": {
@@ -261,24 +278,138 @@ const docTemplate = `{
     },
     "definitions": {
         "models.Boy": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "age",
+                "first_name",
+                "last_name",
+                "user_id"
+            ],
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 25
+                },
+                "bio": {
+                    "type": "string",
+                    "example": "I love traveling and meeting new people"
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "profile_picture_url": {
+                    "type": "string",
+                    "example": "https://example.com/profile.jpg"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
         },
         "models.Girl": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "age",
+                "daily_rate",
+                "first_name",
+                "last_name",
+                "user_id"
+            ],
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 23
+                },
+                "bio": {
+                    "type": "string",
+                    "example": "I enjoy meeting new people"
+                },
+                "daily_rate": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "Jane"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "profile_picture_url": {
+                    "type": "string",
+                    "example": "https://example.com/profile.jpg"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
         },
         "models.LoginRequest": {
             "type": "object",
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "john@example.com"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "password123"
                 }
             }
         },
         "models.User": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "role",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john@example.com"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password123"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "boy"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "johndoe"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`
@@ -286,11 +417,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "",
-	BasePath:         "",
-	Schemes:          []string{},
-	Title:            "My API",
-	Description:      "This is an example API that provides user registration, login, and post management",
+	Host:             "localhost:8080",
+	BasePath:         "/",
+	Schemes:          []string{"http"},
+	Title:            "Rent A Girlfriend API",
+	Description:      "This is a girlfriend rental service API",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
