@@ -125,3 +125,34 @@ type BookingRequest struct {
 	BookingDate time.Time `json:"booking_date" example:"2024-01-01T00:00:00Z" binding:"required"`
 	NumOfDays   int       `json:"num_of_days" example:"3" binding:"required"`
 }
+
+type XenditInvoiceRequest struct {
+	ExternalId  string
+	Amount      int
+	Description string
+	FirstName   string
+	LastName    string
+	Email       string
+	Phone       string
+}
+
+type DepostitRequest struct {
+	Amount int
+}
+
+type InternalTransaction struct {
+	ID         uint           `json:"id"`
+	UserID     uint           `json:"user_id"`
+	ExternalId string         `json:"external_id"`
+	Amount     int            `json:"amount"`
+	Status     string         `json:"status"`
+	Type       string         `json:"type"`
+	CreatedAt  time.Time      `json:"created_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
+	UpdatedAt  time.Time      `json:"updated_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
+	DeletedAt  gorm.DeletedAt `json:"deleted_at,omitempty" swaggerignore:"true" swaggertype:"string" example:"2024-01-01T00:00:00Z"`
+}
+
+type XenditCallback struct {
+	ExternalId string `json:"external_id"`
+	Status     string `json:"status"`
+}

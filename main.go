@@ -11,6 +11,7 @@ import (
 
 	_ "rent-a-girlfriend/docs" // Import the generated Swagger docs
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -44,6 +45,11 @@ func main() {
 	}()
 
 	e := echo.New()
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())

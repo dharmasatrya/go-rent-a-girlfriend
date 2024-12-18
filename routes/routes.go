@@ -28,8 +28,10 @@ func Init(e *echo.Echo) {
 	// b.GET("", get user booking)
 	// b.DELETE("/:id", cancel a booking)
 
-	// w := e.Group("/wallets")
-	// w.Use(echojwt.JWT([]byte("secret")))
+	w := e.Group("/wallets")
+	w.Use(echojwt.JWT([]byte("secret")))
 	// w.POST("/withdrawal", handler.)
-	// w.POST("/deposit", handler.)
+	w.POST("/deposit", handler.DepositFunds)
+
+	e.POST("/xenditcallback", handler.XenditCallbackHandler)
 }
