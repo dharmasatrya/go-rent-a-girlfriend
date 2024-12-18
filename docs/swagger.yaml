@@ -1,0 +1,180 @@
+definitions:
+  models.Boy:
+    type: object
+  models.Girl:
+    type: object
+  models.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.User:
+    type: object
+info:
+  contact:
+    email: developer@example.com
+    name: Developer Name
+    url: http://example.com
+  description: This is an example API that provides user registration, login, and
+    post management
+  title: My API
+  version: "1.0"
+paths:
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user and returns a JWT token
+      parameters:
+      - description: User login credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid credentials
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login user
+      tags:
+      - user
+  /users/profile/boy:
+    post:
+      consumes:
+      - application/json
+      description: Creates a profile for a boy user
+      parameters:
+      - description: Boy profile information
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/models.Boy'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Profile created successfully
+          schema:
+            $ref: '#/definitions/models.Boy'
+        "400":
+          description: Invalid request payload
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Profile already exists
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerToken: []
+      summary: Create boy profile
+      tags:
+      - profile
+  /users/profile/girl:
+    post:
+      consumes:
+      - application/json
+      description: Creates a profile for a girl user
+      parameters:
+      - description: Girl profile information
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/models.Girl'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Profile created successfully
+          schema:
+            $ref: '#/definitions/models.Girl'
+        "400":
+          description: Invalid request payload
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Profile already exists
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerToken: []
+      summary: Create girl profile
+      tags:
+      - profile
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Registers a new user with full name, email, username, password,
+        and age
+      parameters:
+      - description: User Registration Information
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Invalid request payload or duplicate email/username
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - user
+swagger: "2.0"
