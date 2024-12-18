@@ -30,6 +30,7 @@ func Init(e *echo.Echo) {
 
 	w := e.Group("/wallets")
 	w.Use(echojwt.JWT([]byte("secret")))
+	w.POST("", handler.CreateWallet)
 	// w.POST("/withdrawal", handler.)
 	w.POST("/deposit", handler.DepositFunds)
 

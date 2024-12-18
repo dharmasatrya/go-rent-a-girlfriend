@@ -10,6 +10,34 @@ import (
 	gonanoid "github.com/matoous/go-nanoid/v2"
 )
 
+func CreateWallet(c echo.Context) error {
+	var req models.Wallet
+
+	if err := c.Bind(&req); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
+	}
+
+	claims, err := helper.GetClaimsFromToken(c)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
+	}
+
+	req.UserID = uint(claims["user_id"].(float64))
+	req.Balance = 0
+
+	var existingWallet models.Wallet
+	result := db.GormDB.Where("user_id = ?", req.UserID).First(&existingWallet)
+	if result.RowsAffected > 0 {
+		return echo.NewHTTPError(http.StatusConflict, "User already has a wallet")
+	}
+
+	if err := db.GormDB.Create(&req).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error creating wallet")
+	}
+
+	return c.JSON(http.StatusCreated, req)
+}
+
 func DepositFunds(c echo.Context) error {
 	var req models.DepostitRequest
 

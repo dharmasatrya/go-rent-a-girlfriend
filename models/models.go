@@ -10,7 +10,7 @@ import (
 type User struct {
 	ID        uint           `json:"id" example:"1"`
 	Username  string         `json:"username" example:"johndoe" binding:"required"`
-	Password  string         `json:"password" example:"password123" binding:"required"`
+	Password  string         `json:"-" example:"password123" binding:"required"`
 	Email     string         `json:"email" example:"john@example.com" binding:"required"`
 	Role      string         `json:"role" example:"boy" binding:"required"`
 	CreatedAt time.Time      `json:"created_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
