@@ -21,6 +21,58 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
+        "/bookings": {
+            "post": {
+                "description": "Book a date",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "summary": "Book a new date",
+                "parameters": [
+                    {
+                        "description": "Booking Information",
+                        "name": "booking",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BookingRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Booking"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/login": {
             "post": {
                 "description": "Authenticates a user and returns a JWT token",
@@ -274,6 +326,70 @@
         }
     },
     "definitions": {
+        "models.Booking": {
+            "type": "object",
+            "required": [
+                "booking_date",
+                "boy_id",
+                "girl_id",
+                "num_of_days",
+                "total_cost"
+            ],
+            "properties": {
+                "booking_date": {
+                    "type": "string",
+                    "example": "2024-01-01T00:00:00Z"
+                },
+                "boy": {
+                    "$ref": "#/definitions/models.Boy"
+                },
+                "boy_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "girl": {
+                    "$ref": "#/definitions/models.Girl"
+                },
+                "girl_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "num_of_days": {
+                    "type": "integer",
+                    "example": 3
+                },
+                "total_cost": {
+                    "type": "integer",
+                    "example": 300
+                }
+            }
+        },
+        "models.BookingRequest": {
+            "type": "object",
+            "required": [
+                "booking_date",
+                "girl_id",
+                "num_of_days"
+            ],
+            "properties": {
+                "booking_date": {
+                    "type": "string",
+                    "example": "2024-01-01T00:00:00Z"
+                },
+                "girl_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "num_of_days": {
+                    "type": "integer",
+                    "example": 3
+                }
+            }
+        },
         "models.Boy": {
             "type": "object",
             "required": [

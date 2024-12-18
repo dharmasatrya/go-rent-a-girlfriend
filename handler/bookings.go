@@ -10,6 +10,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// CreateBooking godoc
+// @Summary Book a new date
+// @Description Book a date
+// @Tags booking
+// @Accept json
+// @Produce json
+// @Param booking body models.BookingRequest true "Booking Information"
+// @Success 201 {object} models.Booking
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /bookings [post]
 func CreateBooking(c echo.Context) error {
 	var req models.Booking
 

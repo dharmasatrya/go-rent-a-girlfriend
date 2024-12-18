@@ -1,5 +1,52 @@
 basePath: /
 definitions:
+  models.Booking:
+    properties:
+      booking_date:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      boy:
+        $ref: '#/definitions/models.Boy'
+      boy_id:
+        example: 1
+        type: integer
+      girl:
+        $ref: '#/definitions/models.Girl'
+      girl_id:
+        example: 1
+        type: integer
+      id:
+        example: 1
+        type: integer
+      num_of_days:
+        example: 3
+        type: integer
+      total_cost:
+        example: 300
+        type: integer
+    required:
+    - booking_date
+    - boy_id
+    - girl_id
+    - num_of_days
+    - total_cost
+    type: object
+  models.BookingRequest:
+    properties:
+      booking_date:
+        example: "2024-01-01T00:00:00Z"
+        type: string
+      girl_id:
+        example: 1
+        type: integer
+      num_of_days:
+        example: 3
+        type: integer
+    required:
+    - booking_date
+    - girl_id
+    - num_of_days
+    type: object
   models.Boy:
     properties:
       age:
@@ -108,6 +155,40 @@ info:
   title: Rent A Girlfriend API
   version: "1.0"
 paths:
+  /bookings:
+    post:
+      consumes:
+      - application/json
+      description: Book a date
+      parameters:
+      - description: Booking Information
+        in: body
+        name: booking
+        required: true
+        schema:
+          $ref: '#/definitions/models.BookingRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Booking'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Book a new date
+      tags:
+      - booking
   /users/login:
     post:
       consumes:

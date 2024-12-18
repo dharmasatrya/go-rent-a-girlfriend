@@ -95,8 +95,8 @@ type Booking struct {
 	BookingDate time.Time      `json:"booking_date" example:"2024-01-01T00:00:00Z" binding:"required"`
 	NumOfDays   int            `json:"num_of_days" example:"3" binding:"required"`
 	TotalCost   int            `json:"total_cost" example:"300" binding:"required"`
-	Boy         Boy            `json:"boy,omitempty" swaggerignore:"true"`
-	Girl        Girl           `json:"girl,omitempty" swaggerignore:"true"`
+	Boy         Boy            `json:"boy,omitempty"`
+	Girl        Girl           `json:"girl,omitempty"`
 	CreatedAt   time.Time      `json:"created_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	UpdatedAt   time.Time      `json:"updated_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	DeletedAt   gorm.DeletedAt `json:"deleted_at,omitempty" swaggerignore:"true" swaggertype:"string" example:"2024-01-01T00:00:00Z"`
@@ -118,4 +118,10 @@ type Rating struct {
 type LoginRequest struct {
 	Email    string `json:"email" example:"john@example.com"`
 	Password string `json:"password" example:"password123"`
+}
+
+type BookingRequest struct {
+	GirlID      uint      `json:"girl_id" example:"1" binding:"required"`
+	BookingDate time.Time `json:"booking_date" example:"2024-01-01T00:00:00Z" binding:"required"`
+	NumOfDays   int       `json:"num_of_days" example:"3" binding:"required"`
 }
