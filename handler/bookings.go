@@ -63,9 +63,5 @@ func CreateBooking(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error creating booking")
 	}
 
-	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching complete booking data")
-	}
-
 	return c.JSON(http.StatusCreated, req)
 }
