@@ -6,6 +6,9 @@ import (
 	"gorm.io/gorm"
 )
 
+// User represents the user model
+// @Description User account information
+// swagger:model User
 type User struct {
 	ID        uint           `gorm:"primaryKey" json:"id"`
 	Username  string         `gorm:"not null" json:"username"`
@@ -17,6 +20,9 @@ type User struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
 
+// Wallet represent the user's wallet
+// @Description Wallet information
+// swagger:model Wallet
 type Wallet struct {
 	ID                uint           `gorm:"primaryKey" json:"id"`
 	UserID            uint           `gorm:"not null" json:"user_id"`
@@ -28,9 +34,12 @@ type Wallet struct {
 	DeletedAt         gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
 
+// Boy represents the boy profile model
+// @Description Boy profile information
+// swagger:model Boy
 type Boy struct {
 	ID                uint           `gorm:"primaryKey" json:"id"`
-	UserID            uint           `gorm:"not null" json:"user_id"`
+	UserID            uint           `json:"user_id" gorm:"not null"`
 	FirstName         string         `gorm:"not null" json:"first_name"`
 	LastName          string         `gorm:"not null" json:"last_name"`
 	Age               int            `gorm:"not null" json:"age"`
@@ -42,6 +51,9 @@ type Boy struct {
 	DeletedAt         gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
 
+// Girl represents the girl profile model
+// @Description girl profile information
+// swagger:model Girl
 type Girl struct {
 	ID                uint           `gorm:"primaryKey" json:"id"`
 	UserID            uint           `gorm:"not null" json:"user_id"`
@@ -57,6 +69,9 @@ type Girl struct {
 	DeletedAt         gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
 
+// Availability represents the availability of the girls
+// @Description girls availability
+// swagger:model Availability
 type Availability struct {
 	ID          uint           `gorm:"primaryKey" json:"id"`
 	GirlID      uint           `gorm:"not null" json:"girl_id"`
@@ -67,6 +82,9 @@ type Availability struct {
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
 
+// Transaction
+// @Description transactions table model
+// swagger:model Transaction
 type Transaction struct {
 	ID               uint           `gorm:"primaryKey" json:"id"`
 	SenderWalletID   uint           `gorm:"not null" json:"sender_wallet_id"`
@@ -80,6 +98,9 @@ type Transaction struct {
 	DeletedAt        gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
 
+// Booking
+// @Description booking table model
+// swagger:model Booking
 type Booking struct {
 	ID          uint           `gorm:"primaryKey" json:"id"`
 	BoyID       uint           `gorm:"not null" json:"boy_id"`
@@ -94,6 +115,9 @@ type Booking struct {
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
 
+// Rating
+// @Description rating
+// swagger:model Rating
 type Rating struct {
 	ID        uint           `gorm:"primaryKey" json:"id"`
 	GirlID    uint           `gorm:"not null" json:"girl_id"`
