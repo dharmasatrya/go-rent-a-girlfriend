@@ -22,9 +22,9 @@ func Init(e *echo.Echo) {
 	// g.GET("", get all available girlfriend)
 	// g.GET("/:id", get by id)
 
-	// b := e.Group("/bookings")
-	// b.Use(ebhojwt.JWT([]byte("secret")))
-	// b.POST("", rent a girlfriend)
+	b := e.Group("/bookings")
+	b.Use(echojwt.JWT([]byte("secret")))
+	b.POST("", handler.CreateBooking)
 	// b.GET("", get user booking)
 	// b.DELETE("/:id", cancel a booking)
 

@@ -24,6 +24,7 @@ type Wallet struct {
 	UserID            uint           `json:"user_id" example:"1" binding:"required"`
 	BankCode          string         `json:"bank_code" example:"BCA" binding:"required"`
 	BankAccountNumber string         `json:"bank_account_number" example:"1234567890" binding:"required"`
+	Balance           int            `json:"balance"`
 	User              User           `json:"-" swaggerignore:"true"`
 	CreatedAt         time.Time      `json:"created_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	UpdatedAt         time.Time      `json:"updated_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
@@ -94,8 +95,8 @@ type Booking struct {
 	BookingDate time.Time      `json:"booking_date" example:"2024-01-01T00:00:00Z" binding:"required"`
 	NumOfDays   int            `json:"num_of_days" example:"3" binding:"required"`
 	TotalCost   int            `json:"total_cost" example:"300" binding:"required"`
-	Boy         Boy            `json:"-" swaggerignore:"true"`
-	Girl        Girl           `json:"-" swaggerignore:"true"`
+	Boy         Boy            `json:"boy,omitempty" swaggerignore:"true"`
+	Girl        Girl           `json:"girl,omitempty" swaggerignore:"true"`
 	CreatedAt   time.Time      `json:"created_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	UpdatedAt   time.Time      `json:"updated_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	DeletedAt   gorm.DeletedAt `json:"deleted_at,omitempty" swaggerignore:"true" swaggertype:"string" example:"2024-01-01T00:00:00Z"`

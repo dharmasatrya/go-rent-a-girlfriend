@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"rent-a-girlfriend/db"
 	"rent-a-girlfriend/helper"
@@ -87,6 +88,7 @@ func UserLogin(c echo.Context) error {
 
 	// TODO: Implement login via username as well
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+		fmt.Println(user.Password, req.Password)
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid Email or Password"})
 	}
 
