@@ -81,20 +81,23 @@ func UserLogin(c echo.Context) error {
 	var user models.User
 	if err := db.GormDB.Where("email = ?", req.Email).Take(&user).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid Email or Password"})
+			return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid Email or Password 84"})
 		}
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Error Fetching User Data"})
 	}
 
+	fmt.Println(user)
+
 	// TODO: Implement login via username as well
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
-		fmt.Println(user.Password, req.Password)
+		fmt.Println(user.Password, req.Password, err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid Email or Password"})
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id": user.ID,
-		"exp":     time.Now().Add(time.Hour * 72).Unix(),
+		"user_id":   user.ID,
+		"user_role": user.Role,
+		"exp":       time.Now().Add(time.Hour * 72).Unix(),
 	})
 
 	tokenString, err := token.SignedString(jwtSecret)
@@ -109,6 +112,19 @@ func UserLogin(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"token": tokenString,
 	})
+}
+
+func LoginDebug(c echo.Context) error {
+	storedHash := "$2a$10$kcTgp0y8qMUQ9NrSy8yKHudJWMmd4m7aV/2jac05G.OVR5/9PYP8m"
+	password := "password"
+
+	err := bcrypt.CompareHashAndPassword([]byte(storedHash), []byte(password))
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+	} else {
+		fmt.Println("Password matches!")
+	}
+	return c.JSON(http.StatusOK, "ok")
 }
 
 // UserCreateGirlProfile godoc

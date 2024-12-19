@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"rent-a-girlfriend/db"
 	"rent-a-girlfriend/helper"
@@ -31,13 +32,15 @@ func CreateBooking(c echo.Context) error {
 	}
 
 	booking.GirlID = req.GirlID
+	booking.BookingDate = req.BookingDate
+	booking.NumOfDays = req.NumOfDays
 
 	//get userid
 	claims, err := helper.GetClaimsFromToken(c)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
 	}
-	booking.BoyID = uint(claims["user_id"].(float64))
+	userId := uint(claims["user_id"].(float64))
 
 	//get girl availability
 	var availability models.Availability
@@ -47,13 +50,14 @@ func CreateBooking(c echo.Context) error {
 
 	//get girl profile
 	var girlProfile models.Girl
-	if err := db.GormDB.Where("user_id = ?", req.GirlID).First(&girlProfile).Error; err != nil {
+	if err := db.GormDB.Where("id = ?", req.GirlID).First(&girlProfile).Error; err != nil {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl profile")
 	}
+	booking.Girl = girlProfile
 
 	//get boy profile
 	var boyProfile models.Boy
-	if err := db.GormDB.Where("user_id = ?", booking.BoyID).First(&boyProfile).Error; err != nil {
+	if err := db.GormDB.Where("user_id = ?", userId).First(&boyProfile).Error; err != nil {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl profile")
 	}
 	booking.Boy = boyProfile
@@ -67,7 +71,7 @@ func CreateBooking(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl wallet")
 	}
 	//get boy wallet id
-	boyWalletId, err := helper.GetWalletIDByUserID(booking.BoyID)
+	boyWalletId, err := helper.GetWalletIDByUserID(userId)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching boy wallet")
 	}
@@ -83,7 +87,8 @@ func CreateBooking(c echo.Context) error {
 	}
 
 	// Create the booking
-	if err := db.GormDB.Create(&booking).Error; err != nil {
+	fmt.Println(booking)
+	if err := db.GormDB.Debug().Create(&booking).Error; err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error creating booking")
 	}
 
@@ -100,6 +105,24 @@ func CreateBooking(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, booking)
+}
+
+func GetAllBooking(c echo.Context) error {
+	var booking []models.Booking
+
+	claims, err := helper.GetClaimsFromToken(c)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
+	}
+	boyID := uint(claims["user_id"].(float64))
+
+	if err := db.GormDB.Where("boy_id = ?", boyID).Find(&booking).Error; err != nil {
+		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl profile")
+	}
+
+	fmt.Println(boyID)
+
+	return c.JSON(http.StatusOK, booking)
 }
 
 func GetAvailableGirls(c echo.Context) error {

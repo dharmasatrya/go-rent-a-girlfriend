@@ -3,6 +3,8 @@ package routes
 import (
 	"rent-a-girlfriend/handler"
 
+	m "rent-a-girlfriend/middleware"
+
 	echojwt "github.com/labstack/echo-jwt"
 	"github.com/labstack/echo/v4"
 )
@@ -25,7 +27,7 @@ func Init(e *echo.Echo) {
 	b := e.Group("/bookings")
 	b.Use(echojwt.JWT([]byte("secret")))
 	b.POST("", handler.CreateBooking)
-	// b.GET("", get user booking)
+	b.GET("", handler.GetAllBooking)
 	// b.DELETE("/:id", cancel a booking)
 
 	w := e.Group("/wallets")
@@ -33,6 +35,10 @@ func Init(e *echo.Echo) {
 	w.POST("", handler.CreateWallet)
 	w.POST("/withdrawal", handler.WithdrawFunds)
 	w.POST("/deposit", handler.DepositFunds)
+
+	adm := e.Group("/admin")
+	adm.Use(m.RequireRole("admin"))
+	// adm.GET("/bookings")
 
 	e.POST("/xenditcallback/invoice", handler.XenditInvoiceCallbackHandler)
 	e.POST("/xenditcallback/disbursement", handler.XenditDisbursementCallbackHandler)
