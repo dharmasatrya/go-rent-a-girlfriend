@@ -52,7 +52,7 @@ type Girl struct {
 // LoginRequest represents login request information
 type LoginRequest struct {
 	Email    string `json:"email" example:"john@example.com"`
-	Password string `json:"password" example:"password123"`
+	Password string `json:"-" example:"password123"`
 }
 
 // Rating represents rating information

@@ -31,7 +31,7 @@ func CreateBooking(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
 	}
 
-	booking.GirlID = req.GirlID
+	booking.GirlUserID = req.GirlID
 	booking.BookingDate = req.BookingDate
 	booking.NumOfDays = req.NumOfDays
 
@@ -41,6 +41,7 @@ func CreateBooking(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
 	}
 	userId := uint(claims["user_id"].(float64))
+	booking.BoyUserID = userId
 
 	//get girl availability
 	var availability models.Availability
@@ -58,7 +59,7 @@ func CreateBooking(c echo.Context) error {
 	//get boy profile
 	var boyProfile models.Boy
 	if err := db.GormDB.Where("user_id = ?", userId).First(&boyProfile).Error; err != nil {
-		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl profile")
+		return echo.NewHTTPError(http.StatusConflict, "Error fetching boy profile")
 	}
 	booking.Boy = boyProfile
 
@@ -66,7 +67,7 @@ func CreateBooking(c echo.Context) error {
 	booking.TotalCost = girlProfile.DailyRate * req.NumOfDays
 
 	//get girl wallet id
-	girlWalletId, err := helper.GetWalletIDByUserID(booking.GirlID)
+	girlWalletId, err := helper.GetWalletIDByUserID(booking.GirlUserID)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl wallet")
 	}
@@ -108,32 +109,46 @@ func CreateBooking(c echo.Context) error {
 }
 
 func GetAllBooking(c echo.Context) error {
-	var booking []models.Booking
+	// Initialize our bookings slice
+	var bookings []models.Booking
 
+	// Get user ID from JWT token
 	claims, err := helper.GetClaimsFromToken(c)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
 	}
-	boyID := uint(claims["user_id"].(float64))
+	userID := uint(claims["user_id"].(float64))
 
-	if err := db.GormDB.Where("boy_id = ?", boyID).Find(&booking).Error; err != nil {
-		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl profile")
+	// Fetch bookings with related data using Preload
+	if err := db.GormDB.
+		Preload("Boy").
+		Preload("Girl").
+		Where("boy_user_id = ?", userID).
+		Find(&bookings).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching bookings")
 	}
 
-	fmt.Println(boyID)
-
-	return c.JSON(http.StatusOK, booking)
+	return c.JSON(http.StatusOK, bookings)
 }
 
 func GetAvailableGirls(c echo.Context) error {
 	date := c.QueryParam("date")
 	var girls []models.Girl
+	var err error
 
-	// Get girls who don't have bookings for the specified date
-	if err := db.GormDB.
-		Joins("LEFT JOIN availabilities ON girls.id = availabilities.girl_id").
-		Where("availabilities.id IS NULL OR ? NOT BETWEEN availabilities.start_date AND availabilities.end_date", date).
-		Find(&girls).Error; err != nil {
+	if date == "" {
+		err = db.GormDB.
+			Joins("LEFT JOIN availabilities ON girls.id = availabilities.girl_id").
+			Where("availabilities.is_available IS TRUE").
+			Find(&girls).Error
+	} else {
+		err = db.GormDB.
+			Joins("LEFT JOIN availabilities ON girls.id = availabilities.girl_id").
+			Where("availabilities.is_available IS TRUE OR ? NOT BETWEEN availabilities.start_date AND availabilities.end_date", date).
+			Find(&girls).Error
+	}
+
+	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching availabilities")
 	}
 

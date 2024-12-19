@@ -6,6 +6,7 @@ import (
 	"rent-a-girlfriend/db"
 	"rent-a-girlfriend/helper"
 	"rent-a-girlfriend/models"
+	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -40,6 +41,8 @@ func UserRegister(c echo.Context) error {
 	}
 
 	req.Password = string(hashedPassword)
+
+	fmt.Printf("Stored hash in DB: %s\n", hashedPassword)
 
 	var existingUser models.User
 	result := db.GormDB.Where("email = ? OR username = ?", req.Email, req.Username).First(&existingUser)
@@ -79,18 +82,25 @@ func UserLogin(c echo.Context) error {
 	}
 
 	var user models.User
-	if err := db.GormDB.Where("email = ?", req.Email).Take(&user).Error; err != nil {
+	// Let's first verify we can find the user and see what's stored
+	if err := db.GormDB.Debug().Where("email = ?", req.Email).Take(&user).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid Email or Password 84"})
+			return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid Email or Password"})
 		}
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Error Fetching User Data"})
 	}
 
-	fmt.Println(user)
+	// Let's log the exact values being compared
+	fmt.Printf("Stored hash in DB: %s\n", user.Password)
+	fmt.Printf("Provided password: %s\n", req.Password)
 
-	// TODO: Implement login via username as well
+	// Verify the hash format
+	if !strings.HasPrefix(user.Password, "$2a$") {
+		fmt.Println("Warning: Stored password hash doesn't have expected bcrypt prefix")
+	}
+
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
-		fmt.Println(user.Password, req.Password, err)
+		fmt.Printf("Password comparison error: %v\n", err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid Email or Password"})
 	}
 
