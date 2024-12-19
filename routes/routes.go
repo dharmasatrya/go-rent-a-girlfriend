@@ -17,9 +17,9 @@ func Init(e *echo.Echo) {
 	up.POST("/girls", handler.UserCreateGirlProfile)
 	up.POST("/boys", handler.UserCreateBoyProfile)
 
-	// g := e.Group("/girlfirends")
-	// g.Use(echojwt.JWT([]byte("secret")))
-	// g.GET("", get all available girlfriend)
+	g := e.Group("/girlfriends")
+	g.Use(echojwt.JWT([]byte("secret")))
+	g.GET("", handler.GetAvailableGirls)
 	// g.GET("/:id", get by id)
 
 	b := e.Group("/bookings")
@@ -36,4 +36,8 @@ func Init(e *echo.Echo) {
 
 	e.POST("/xenditcallback/invoice", handler.XenditInvoiceCallbackHandler)
 	e.POST("/xenditcallback/disbursement", handler.XenditDisbursementCallbackHandler)
+
+	// GET /girls/available?date=2024-01-01
+	// GET /girls/{id}/availability?start_date=2024-01-01&end_date=2024-01-31
+	// GET /girls/{id}/bookings - to see all bookings for a girl
 }

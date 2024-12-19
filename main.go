@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"rent-a-girlfriend/cron"
 	"rent-a-girlfriend/db"
 	m "rent-a-girlfriend/middleware"
 	"rent-a-girlfriend/routes"
@@ -38,6 +39,7 @@ import (
 // @name Authorization
 func main() {
 	db.InitDB()
+	cron.InitAvailabilityCron()
 
 	defer func() {
 		log.Println("Closing database connection...")

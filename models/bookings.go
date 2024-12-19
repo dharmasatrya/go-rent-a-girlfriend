@@ -12,6 +12,8 @@ type Availability struct {
 	GirlID      uint           `json:"girl_id" example:"1" binding:"required"`
 	IsAvailable bool           `json:"is_available" example:"true" binding:"required"`
 	Girl        Girl           `json:"-" swaggerignore:"true"`
+	StartDate   time.Time      `json:"start_date"`
+	EndDate     time.Time      `json:"end_date"`
 	CreatedAt   time.Time      `json:"created_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	UpdatedAt   time.Time      `json:"updated_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	DeletedAt   gorm.DeletedAt `json:"deleted_at,omitempty" swaggerignore:"true" swaggertype:"string" example:"2024-01-01T00:00:00Z"`

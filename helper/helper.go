@@ -5,9 +5,12 @@ import (
 	"net/http"
 	"regexp"
 	"rent-a-girlfriend/db"
+	"rent-a-girlfriend/models"
+	"time"
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 type JokeResponse struct {
@@ -53,4 +56,29 @@ func ActivityLogger(userId uint, description string) bool {
 	}
 
 	return true
+}
+
+func UpdateGirlAvailability(girlID uint, startDate time.Time, numOfDays int) error {
+	endDate := startDate.AddDate(0, 0, numOfDays)
+
+	return db.GormDB.Transaction(func(tx *gorm.DB) error {
+		// Check if girl is already booked during this period
+		var existingBooking models.Availability
+		if err := tx.Where(
+			"girl_id = ? AND ? <= end_date AND ? >= start_date",
+			girlID, startDate, endDate,
+		).First(&existingBooking).Error; err == nil {
+			return fmt.Errorf("girl is already booked during this period")
+		}
+
+		// Create new availability record
+		availability := models.Availability{
+			GirlID:      girlID,
+			IsAvailable: false,
+			StartDate:   startDate,
+			EndDate:     endDate,
+		}
+
+		return tx.Create(&availability).Error
+	})
 }

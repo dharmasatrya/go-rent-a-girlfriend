@@ -22,45 +22,58 @@ import (
 // @Failure 500 {object} map[string]string
 // @Router /bookings [post]
 func CreateBooking(c echo.Context) error {
-	var req models.Booking
+	var req models.BookingRequest
+	var booking models.Booking
 
+	//bind req
 	if err := c.Bind(&req); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
 	}
 
+	booking.GirlID = req.GirlID
+
+	//get userid
 	claims, err := helper.GetClaimsFromToken(c)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
 	}
+	booking.BoyID = uint(claims["user_id"].(float64))
 
-	req.BoyID = uint(claims["user_id"].(float64))
+	//get girl availability
+	var availability models.Availability
+	if err := db.GormDB.Where("girl_id = ? AND is_available = ?", req.GirlID, true).First(&availability).Error; err != nil {
+		return echo.NewHTTPError(http.StatusConflict, "Girl is not available")
+	}
 
+	//get girl profile
 	var girlProfile models.Girl
 	if err := db.GormDB.Where("user_id = ?", req.GirlID).First(&girlProfile).Error; err != nil {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl profile")
 	}
 
+	//get boy profile
 	var boyProfile models.Boy
-	if err := db.GormDB.Where("user_id = ?", req.BoyID).First(&boyProfile).Error; err != nil {
+	if err := db.GormDB.Where("user_id = ?", booking.BoyID).First(&boyProfile).Error; err != nil {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl profile")
 	}
+	booking.Boy = boyProfile
 
-	req.Boy = boyProfile
-	req.Girl = girlProfile
+	//calculate total cost
+	booking.TotalCost = girlProfile.DailyRate * req.NumOfDays
 
-	req.TotalCost = girlProfile.DailyRate * req.NumOfDays
-
-	girlWalletId, err := helper.GetWalletIDByUserID(req.GirlID)
+	//get girl wallet id
+	girlWalletId, err := helper.GetWalletIDByUserID(booking.GirlID)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl wallet")
 	}
-
-	boyWalletId, err := helper.GetWalletIDByUserID(req.BoyID)
+	//get boy wallet id
+	boyWalletId, err := helper.GetWalletIDByUserID(booking.BoyID)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusConflict, "Error fetching girl wallet")
+		return echo.NewHTTPError(http.StatusConflict, "Error fetching boy wallet")
 	}
 
-	if err := helper.Transaction(boyWalletId, girlWalletId, req.TotalCost); err != nil {
+	//transaction
+	if err := helper.Transaction(boyWalletId, girlWalletId, booking.TotalCost); err != nil {
 		// Handle error (e.g., insufficient balance, database errors)
 		if strings.Contains(err.Error(), "insufficient balance") {
 			// Handle insufficient balance specifically
@@ -69,10 +82,37 @@ func CreateBooking(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Transaction failed")
 	}
 
-	// Create the booking first
-	if err := db.GormDB.Create(&req).Error; err != nil {
+	// Create the booking
+	if err := db.GormDB.Create(&booking).Error; err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Error creating booking")
 	}
 
-	return c.JSON(http.StatusCreated, req)
+	// Update availability
+	endDate := req.BookingDate.AddDate(0, 0, req.NumOfDays)
+	if err := db.GormDB.Table("availabilities").
+		Where("girl_id = ?", req.GirlID).
+		Updates(map[string]interface{}{
+			"is_available": false,
+			"start_date":   req.BookingDate,
+			"end_date":     endDate,
+		}).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error updating availability")
+	}
+
+	return c.JSON(http.StatusCreated, booking)
+}
+
+func GetAvailableGirls(c echo.Context) error {
+	date := c.QueryParam("date")
+	var girls []models.Girl
+
+	// Get girls who don't have bookings for the specified date
+	if err := db.GormDB.
+		Joins("LEFT JOIN availabilities ON girls.id = availabilities.girl_id").
+		Where("availabilities.id IS NULL OR ? NOT BETWEEN availabilities.start_date AND availabilities.end_date", date).
+		Find(&girls).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching availabilities")
+	}
+
+	return c.JSON(http.StatusOK, girls)
 }
