@@ -154,3 +154,16 @@ func GetAvailableGirls(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, girls)
 }
+
+func GetGirlById(c echo.Context) error {
+	girlId := c.Param("id")
+	var girl models.Girl
+
+	if err := db.GormDB.
+		Where("id", girlId).
+		First(&girl).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching girl by id")
+	}
+
+	return c.JSON(http.StatusOK, girl)
+}

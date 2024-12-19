@@ -22,13 +22,14 @@ func Init(e *echo.Echo) {
 	g := e.Group("/girlfriends")
 	g.Use(echojwt.JWT([]byte("secret")))
 	g.GET("", handler.GetAvailableGirls)
-	// g.GET("/:id", get by id)
+	g.GET("/:id", handler.GetGirlById)
+	g.POST("/review", handler.GiveRating)
 
 	b := e.Group("/bookings")
 	b.Use(echojwt.JWT([]byte("secret")))
 	b.POST("", handler.CreateBooking)
 	b.GET("", handler.GetAllBooking)
-	// b.DELETE("/:id", cancel a booking)
+	// b.DELETE("/:id", )
 
 	w := e.Group("/wallets")
 	w.Use(echojwt.JWT([]byte("secret")))
@@ -42,8 +43,4 @@ func Init(e *echo.Echo) {
 
 	e.POST("/xenditcallback/invoice", handler.XenditInvoiceCallbackHandler)
 	e.POST("/xenditcallback/disbursement", handler.XenditDisbursementCallbackHandler)
-
-	// GET /girls/available?date=2024-01-01
-	// GET /girls/{id}/availability?start_date=2024-01-01&end_date=2024-01-31
-	// GET /girls/{id}/bookings - to see all bookings for a girl
 }
