@@ -167,3 +167,39 @@ func GetGirlById(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, girl)
 }
+
+func CancelBooking(c echo.Context) error {
+	bookingID := c.Param("id")
+	var booking models.Booking
+
+	claims, err := helper.GetClaimsFromToken(c)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching claims from token")
+	}
+	userID := uint(claims["user_id"].(float64))
+
+	if err := db.GormDB.
+		Preload("Boy").
+		Preload("Girl").
+		Where("id = ?", bookingID).
+		First(&booking).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching bookings")
+	}
+
+	if booking.BoyUserID != userID {
+		return echo.NewHTTPError(http.StatusForbidden, "Not your booking")
+	}
+
+	// Fetch bookings with related data using Preload
+	var deletedBooking models.Booking
+
+	if err := db.GormDB.
+		Preload("Boy").
+		Preload("Girl").
+		Where("id = ?", bookingID).
+		Delete(&deletedBooking).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching bookings")
+	}
+
+	return c.JSON(http.StatusOK, booking)
+}

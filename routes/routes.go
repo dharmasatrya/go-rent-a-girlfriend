@@ -31,7 +31,7 @@ func Init(e *echo.Echo) {
 	b.Use(m.RequireRole("boys"))
 	b.POST("", handler.CreateBooking)
 	b.GET("", handler.GetAllBooking)
-	// b.DELETE("/:id", )
+	b.DELETE("/:id", handler.CancelBooking)
 
 	w := e.Group("/wallets")
 	w.Use(echojwt.JWT([]byte("secret")))
