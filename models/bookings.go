@@ -21,17 +21,17 @@ type Availability struct {
 
 // Booking represents booking information
 type Booking struct {
-	ID          uint           `json:"id" example:"1"`
-	BoyUserID   uint           `json:"boy_user_id" binding:"required"`
-	GirlUserID  uint           `json:"girl_user_id" binding:"required"`
-	BookingDate time.Time      `json:"booking_date" binding:"required"`
-	NumOfDays   int            `json:"num_of_days" binding:"required"`
-	TotalCost   int            `json:"total_cost" binding:"required"`
-	Boy         Boy            `json:"boy,omitempty" gorm:"foreignKey:UserID;references:BoyUserID"`
-	Girl        Girl           `json:"girl,omitempty" gorm:"foreignKey:UserID;references:GirlUserID"`
-	CreatedAt   time.Time      `json:"created_at,omitempty"`
-	UpdatedAt   time.Time      `json:"updated_at,omitempty"`
-	DeletedAt   gorm.DeletedAt `json:"deleted_at,omitempty"`
+	ID          uint       `json:"id" example:"1"`
+	BoyUserID   uint       `json:"boy_user_id" binding:"required"`
+	GirlUserID  uint       `json:"girl_user_id" binding:"required"`
+	BookingDate time.Time  `json:"booking_date" binding:"required"`
+	NumOfDays   int        `json:"num_of_days" binding:"required"`
+	TotalCost   int        `json:"total_cost" binding:"required"`
+	Boy         Boy        `json:"boy,omitempty" gorm:"foreignKey:UserID;references:BoyUserID"`
+	Girl        Girl       `json:"girl,omitempty" gorm:"foreignKey:UserID;references:GirlUserID"`
+	CreatedAt   time.Time  `json:"created_at,omitempty"`
+	UpdatedAt   time.Time  `json:"updated_at,omitempty"`
+	DeletedAt   *time.Time `json:"deleted_at,omitempty" swaggertype:"string" format:"date-time" example:"2024-01-01T00:00:00Z"`
 }
 
 type BookingRequest struct {

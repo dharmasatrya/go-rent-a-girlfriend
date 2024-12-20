@@ -25,6 +25,39 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/bookings": {
+            "get": {
+                "description": "get all booking of a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "bookings"
+                ],
+                "summary": "get all booking of a user",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Booking"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Book a date",
                 "consumes": [
@@ -34,7 +67,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "booking"
+                    "bookings"
                 ],
                 "summary": "Book a new date",
                 "parameters": [
@@ -76,6 +109,271 @@ const docTemplate = `{
                 }
             }
         },
+        "/bookings/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Cancels a booking if it belongs to the authenticated user. Only the boy who made the booking can cancel it.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "bookings"
+                ],
+                "summary": "Cancel an existing booking",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Booking ID to cancel",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cancelled booking details",
+                        "schema": {
+                            "$ref": "#/definitions/models.Booking"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid booking ID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - Not your booking",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Booking not found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/girlfriends": {
+            "get": {
+                "description": "Retrieves a list of available girls. Can be filtered by date and age. If no filters are provided, returns all available girls.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "girlfriends"
+                ],
+                "summary": "Get available girls with optional filtering",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Date to check availability (format: 2024-01-01)",
+                        "name": "date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by specific age",
+                        "name": "age",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of available girls",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Girl"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid age parameter",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/girlfriends/ratings": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Allows users to submit ratings (1-5 stars) and written reviews for girls they have booked",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "girlfriends"
+                ],
+                "summary": "Submit a rating and review for a girl",
+                "parameters": [
+                    {
+                        "description": "Rating and review details",
+                        "name": "rating",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Rating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created rating details",
+                        "schema": {
+                            "$ref": "#/definitions/models.Rating"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request payload or rating value",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - Can't rate without a prior booking",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/girlfriends/{id}": {
+            "get": {
+                "description": "Retrieves detailed information about a girl's profile using their ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "girlfriends"
+                ],
+                "summary": "Get a specific girl's profile by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Girl ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Girl profile details",
+                        "schema": {
+                            "$ref": "#/definitions/models.Girl"
+                        }
+                    },
+                    "404": {
+                        "description": "Girl not found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/login": {
             "post": {
                 "description": "Authenticates a user and returns a JWT token",
@@ -96,7 +394,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.LoginRequest"
+                            "$ref": "#/definitions/models.LoginRequestWithPassword"
                         }
                     }
                 ],
@@ -326,6 +624,162 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/wallets": {
+            "post": {
+                "description": "Registers a new wallet",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Create a wallet",
+                "parameters": [
+                    {
+                        "description": "User wallet",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Wallet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Wallet"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets/deposit": {
+            "post": {
+                "description": "Create a deposit",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Create a deposit",
+                "parameters": [
+                    {
+                        "description": "Deposit amount",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.DepostitRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Wallet"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/wallets/withdrawal": {
+            "post": {
+                "description": "Create a withdrawal",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Create a withdrawal",
+                "parameters": [
+                    {
+                        "description": "withdrawal",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.WithdrawalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Wallet"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -333,41 +787,47 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "booking_date",
-                "boy_id",
-                "girl_id",
+                "boy_user_id",
+                "girl_user_id",
                 "num_of_days",
                 "total_cost"
             ],
             "properties": {
                 "booking_date": {
-                    "type": "string",
-                    "example": "2024-01-01T00:00:00Z"
+                    "type": "string"
                 },
                 "boy": {
                     "$ref": "#/definitions/models.Boy"
                 },
-                "boy_id": {
-                    "type": "integer",
-                    "example": 1
+                "boy_user_id": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-01-01T00:00:00Z"
                 },
                 "girl": {
                     "$ref": "#/definitions/models.Girl"
                 },
-                "girl_id": {
-                    "type": "integer",
-                    "example": 1
+                "girl_user_id": {
+                    "type": "integer"
                 },
                 "id": {
                     "type": "integer",
                     "example": 1
                 },
                 "num_of_days": {
-                    "type": "integer",
-                    "example": 3
+                    "type": "integer"
                 },
                 "total_cost": {
-                    "type": "integer",
-                    "example": 300
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
@@ -410,6 +870,11 @@ const docTemplate = `{
                     "type": "string",
                     "example": "I love traveling and meeting new people"
                 },
+                "deleted_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-01-01T00:00:00Z"
+                },
                 "first_name": {
                     "type": "string",
                     "example": "John"
@@ -429,6 +894,14 @@ const docTemplate = `{
                 "user_id": {
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "models.DepostitRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
                 }
             }
         },
@@ -454,6 +927,11 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 100
                 },
+                "deleted_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-01-01T00:00:00Z"
+                },
                 "first_name": {
                     "type": "string",
                     "example": "Jane"
@@ -476,7 +954,7 @@ const docTemplate = `{
                 }
             }
         },
-        "models.LoginRequest": {
+        "models.LoginRequestWithPassword": {
             "type": "object",
             "properties": {
                 "email": {
@@ -489,15 +967,49 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Rating": {
+            "type": "object",
+            "required": [
+                "girl_id",
+                "stars"
+            ],
+            "properties": {
+                "deleted_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-01-01T00:00:00Z"
+                },
+                "girl_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "review": {
+                    "type": "string",
+                    "example": "Great experience!"
+                },
+                "stars": {
+                    "type": "integer",
+                    "example": 5
+                }
+            }
+        },
         "models.User": {
             "type": "object",
             "required": [
                 "email",
-                "password",
                 "role",
                 "username"
             ],
             "properties": {
+                "deleted_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-01-01T00:00:00Z"
+                },
                 "email": {
                     "type": "string",
                     "example": "john@example.com"
@@ -506,10 +1018,6 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
-                "password": {
-                    "type": "string",
-                    "example": "password123"
-                },
                 "role": {
                     "type": "string",
                     "example": "boy"
@@ -517,6 +1025,48 @@ const docTemplate = `{
                 "username": {
                     "type": "string",
                     "example": "johndoe"
+                }
+            }
+        },
+        "models.Wallet": {
+            "type": "object",
+            "required": [
+                "bank_account_name",
+                "bank_account_number",
+                "bank_code",
+                "user_id"
+            ],
+            "properties": {
+                "balance": {
+                    "type": "integer"
+                },
+                "bank_account_name": {
+                    "type": "string",
+                    "example": "Dharma Satrya"
+                },
+                "bank_account_number": {
+                    "type": "string",
+                    "example": "1234567890"
+                },
+                "bank_code": {
+                    "type": "string",
+                    "example": "BCA"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "user_id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "models.WithdrawalRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
                 }
             }
         }

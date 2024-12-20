@@ -24,7 +24,7 @@ func Init(e *echo.Echo) {
 	g.Use(m.RequireRole("boys"))
 	g.GET("", handler.GetAvailableGirls)
 	g.GET("/:id", handler.GetGirlById)
-	g.POST("/review", handler.GiveRating)
+	g.POST("/ratings", handler.GiveRating)
 
 	b := e.Group("/bookings")
 	b.Use(echojwt.JWT([]byte("secret")))
@@ -37,7 +37,7 @@ func Init(e *echo.Echo) {
 	w.Use(echojwt.JWT([]byte("secret")))
 	w.POST("", handler.CreateWallet)
 	w.POST("/withdrawal", handler.WithdrawFunds)
-	w.POST("/deposit", handler.DepositFunds, m.RequireRole("admin"))
+	w.POST("/deposit", handler.DepositFunds, m.RequireRole("boys"))
 
 	adm := e.Group("/admin")
 	adm.Use(m.RequireRole("admin"))

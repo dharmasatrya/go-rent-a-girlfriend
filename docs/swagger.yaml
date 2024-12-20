@@ -3,31 +3,34 @@ definitions:
   models.Booking:
     properties:
       booking_date:
-        example: "2024-01-01T00:00:00Z"
         type: string
       boy:
         $ref: '#/definitions/models.Boy'
-      boy_id:
-        example: 1
+      boy_user_id:
         type: integer
+      created_at:
+        type: string
+      deleted_at:
+        example: "2024-01-01T00:00:00Z"
+        format: date-time
+        type: string
       girl:
         $ref: '#/definitions/models.Girl'
-      girl_id:
-        example: 1
+      girl_user_id:
         type: integer
       id:
         example: 1
         type: integer
       num_of_days:
-        example: 3
         type: integer
       total_cost:
-        example: 300
         type: integer
+      updated_at:
+        type: string
     required:
     - booking_date
-    - boy_id
-    - girl_id
+    - boy_user_id
+    - girl_user_id
     - num_of_days
     - total_cost
     type: object
@@ -55,6 +58,10 @@ definitions:
       bio:
         example: I love traveling and meeting new people
         type: string
+      deleted_at:
+        example: "2024-01-01T00:00:00Z"
+        format: date-time
+        type: string
       first_name:
         example: John
         type: string
@@ -76,6 +83,11 @@ definitions:
     - last_name
     - user_id
     type: object
+  models.DepostitRequest:
+    properties:
+      amount:
+        type: integer
+    type: object
   models.Girl:
     properties:
       age:
@@ -87,6 +99,10 @@ definitions:
       daily_rate:
         example: 100
         type: integer
+      deleted_at:
+        example: "2024-01-01T00:00:00Z"
+        format: date-time
+        type: string
       first_name:
         example: Jane
         type: string
@@ -109,7 +125,7 @@ definitions:
     - last_name
     - user_id
     type: object
-  models.LoginRequest:
+  models.LoginRequestWithPassword:
     properties:
       email:
         example: john@example.com
@@ -118,17 +134,40 @@ definitions:
         example: password123
         type: string
     type: object
+  models.Rating:
+    properties:
+      deleted_at:
+        example: "2024-01-01T00:00:00Z"
+        format: date-time
+        type: string
+      girl_id:
+        example: 1
+        type: integer
+      id:
+        example: 1
+        type: integer
+      review:
+        example: Great experience!
+        type: string
+      stars:
+        example: 5
+        type: integer
+    required:
+    - girl_id
+    - stars
+    type: object
   models.User:
     properties:
+      deleted_at:
+        example: "2024-01-01T00:00:00Z"
+        format: date-time
+        type: string
       email:
         example: john@example.com
         type: string
       id:
         example: 1
         type: integer
-      password:
-        example: password123
-        type: string
       role:
         example: boy
         type: string
@@ -137,9 +176,38 @@ definitions:
         type: string
     required:
     - email
-    - password
     - role
     - username
+    type: object
+  models.Wallet:
+    properties:
+      balance:
+        type: integer
+      bank_account_name:
+        example: Dharma Satrya
+        type: string
+      bank_account_number:
+        example: "1234567890"
+        type: string
+      bank_code:
+        example: BCA
+        type: string
+      id:
+        example: 1
+        type: integer
+      user_id:
+        example: 1
+        type: integer
+    required:
+    - bank_account_name
+    - bank_account_number
+    - bank_code
+    - user_id
+    type: object
+  models.WithdrawalRequest:
+    properties:
+      amount:
+        type: integer
     type: object
 host: localhost:8080
 info:
@@ -156,6 +224,28 @@ info:
   version: "1.0"
 paths:
   /bookings:
+    get:
+      consumes:
+      - application/json
+      description: get all booking of a user
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/models.Booking'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: get all booking of a user
+      tags:
+      - bookings
     post:
       consumes:
       - application/json
@@ -188,7 +278,183 @@ paths:
             type: object
       summary: Book a new date
       tags:
-      - booking
+      - bookings
+  /bookings/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Cancels a booking if it belongs to the authenticated user. Only
+        the boy who made the booking can cancel it.
+      parameters:
+      - description: Booking ID to cancel
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Cancelled booking details
+          schema:
+            $ref: '#/definitions/models.Booking'
+        "400":
+          description: Invalid booking ID
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized - Invalid or missing token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden - Not your booking
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Booking not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Cancel an existing booking
+      tags:
+      - bookings
+  /girlfriends:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of available girls. Can be filtered by date and
+        age. If no filters are provided, returns all available girls.
+      parameters:
+      - description: 'Date to check availability (format: 2024-01-01)'
+        in: query
+        name: date
+        type: string
+      - description: Filter by specific age
+        in: query
+        name: age
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of available girls
+          schema:
+            items:
+              $ref: '#/definitions/models.Girl'
+            type: array
+        "400":
+          description: Invalid age parameter
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get available girls with optional filtering
+      tags:
+      - girlfriends
+  /girlfriends/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves detailed information about a girl's profile using their
+        ID
+      parameters:
+      - description: Girl ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Girl profile details
+          schema:
+            $ref: '#/definitions/models.Girl'
+        "404":
+          description: Girl not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a specific girl's profile by ID
+      tags:
+      - girlfriends
+  /girlfriends/ratings:
+    post:
+      consumes:
+      - application/json
+      description: Allows users to submit ratings (1-5 stars) and written reviews
+        for girls they have booked
+      parameters:
+      - description: Rating and review details
+        in: body
+        name: rating
+        required: true
+        schema:
+          $ref: '#/definitions/models.Rating'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created rating details
+          schema:
+            $ref: '#/definitions/models.Rating'
+        "400":
+          description: Invalid request payload or rating value
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized - Invalid or missing token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden - Can't rate without a prior booking
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - Bearer: []
+      summary: Submit a rating and review for a girl
+      tags:
+      - girlfriends
   /users/login:
     post:
       consumes:
@@ -200,7 +466,7 @@ paths:
         name: credentials
         required: true
         schema:
-          $ref: '#/definitions/models.LoginRequest'
+          $ref: '#/definitions/models.LoginRequestWithPassword'
       produces:
       - application/json
       responses:
@@ -348,6 +614,108 @@ paths:
       summary: Register a new user
       tags:
       - user
+  /wallets:
+    post:
+      consumes:
+      - application/json
+      description: Registers a new wallet
+      parameters:
+      - description: User wallet
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.Wallet'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Wallet'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a wallet
+      tags:
+      - wallet
+  /wallets/deposit:
+    post:
+      consumes:
+      - application/json
+      description: Create a deposit
+      parameters:
+      - description: Deposit amount
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.DepostitRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Wallet'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a deposit
+      tags:
+      - wallet
+  /wallets/withdrawal:
+    post:
+      consumes:
+      - application/json
+      description: Create a withdrawal
+      parameters:
+      - description: withdrawal
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.WithdrawalRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Wallet'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a withdrawal
+      tags:
+      - wallet
 schemes:
 - http
 securityDefinitions:

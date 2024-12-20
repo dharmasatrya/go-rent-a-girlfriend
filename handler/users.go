@@ -70,7 +70,7 @@ func UserRegister(c echo.Context) error {
 // @Tags user
 // @Accept json
 // @Produce json
-// @Param credentials body models.LoginRequest true "Login Credentials"
+// @Param credentials body models.LoginRequestWithPassword true "Login Credentials"
 // @Success 200 {object} map[string]string{token=string}
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string

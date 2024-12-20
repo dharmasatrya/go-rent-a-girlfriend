@@ -14,7 +14,7 @@ import (
 // CreateBooking godoc
 // @Summary Book a new date
 // @Description Book a date
-// @Tags booking
+// @Tags bookings
 // @Accept json
 // @Produce json
 // @Param booking body models.BookingRequest true "Booking Information"
@@ -108,6 +108,15 @@ func CreateBooking(c echo.Context) error {
 	return c.JSON(http.StatusCreated, booking)
 }
 
+// GetAllBooking godoc
+// @Summary get all booking of a user
+// @Description get all booking of a user
+// @Tags bookings
+// @Accept json
+// @Produce json
+// @Success 201 {array} models.Booking
+// @Failure 500 {object} map[string]string
+// @Router /bookings [get]
 func GetAllBooking(c echo.Context) error {
 	// Initialize our bookings slice
 	var bookings []models.Booking
@@ -131,43 +140,21 @@ func GetAllBooking(c echo.Context) error {
 	return c.JSON(http.StatusOK, bookings)
 }
 
-func GetAvailableGirls(c echo.Context) error {
-	date := c.QueryParam("date")
-	var girls []models.Girl
-	var err error
-
-	if date == "" {
-		err = db.GormDB.
-			Joins("LEFT JOIN availabilities ON girls.id = availabilities.girl_id").
-			Where("availabilities.is_available IS TRUE").
-			Find(&girls).Error
-	} else {
-		err = db.GormDB.
-			Joins("LEFT JOIN availabilities ON girls.id = availabilities.girl_id").
-			Where("availabilities.is_available IS TRUE OR ? NOT BETWEEN availabilities.start_date AND availabilities.end_date", date).
-			Find(&girls).Error
-	}
-
-	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching availabilities")
-	}
-
-	return c.JSON(http.StatusOK, girls)
-}
-
-func GetGirlById(c echo.Context) error {
-	girlId := c.Param("id")
-	var girl models.Girl
-
-	if err := db.GormDB.
-		Where("id", girlId).
-		First(&girl).Error; err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching girl by id")
-	}
-
-	return c.JSON(http.StatusOK, girl)
-}
-
+// CancelBooking godoc
+// @Summary Cancel an existing booking
+// @Description Cancels a booking if it belongs to the authenticated user. Only the boy who made the booking can cancel it.
+// @Tags bookings
+// @Accept json
+// @Produce json
+// @Security Bearer
+// @Param id path int true "Booking ID to cancel" example:"1"
+// @Success 200 {object} models.Booking "Cancelled booking details"
+// @Failure 400 {object} map[string]string "Invalid booking ID"
+// @Failure 401 {object} map[string]string "Unauthorized - Invalid or missing token"
+// @Failure 403 {object} map[string]string "Forbidden - Not your booking"
+// @Failure 404 {object} map[string]string "Booking not found"
+// @Failure 500 {object} map[string]string "Server error"
+// @Router /bookings/{id} [delete]
 func CancelBooking(c echo.Context) error {
 	bookingID := c.Param("id")
 	var booking models.Booking
