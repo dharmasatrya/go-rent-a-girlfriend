@@ -18,6 +18,9 @@ func Init(e *echo.Echo) {
 	up.Use(echojwt.JWT([]byte("secret")))
 	up.POST("/girls", handler.UserCreateGirlProfile, m.RequireRole("girls"))
 	up.POST("/boys", handler.UserCreateBoyProfile, m.RequireRole("boys"))
+	th := u.Group("/transactions")
+	th.Use(echojwt.JWT([]byte("secret")))
+	th.GET("/history", handler.ShowUserTransactions)
 
 	g := e.Group("/girlfriends")
 	g.Use(echojwt.JWT([]byte("secret")))
@@ -41,7 +44,8 @@ func Init(e *echo.Echo) {
 
 	adm := e.Group("/admin")
 	adm.Use(m.RequireRole("admin"))
-	// adm.GET("/bookings")
+	adm.GET("/transactions", handler.ShowTransactions)
+	adm.GET("/transactions/:id", handler.ShowTransactionById)
 
 	e.POST("/xenditcallback/invoice", handler.XenditInvoiceCallbackHandler)
 	e.POST("/xenditcallback/disbursement", handler.XenditDisbursementCallbackHandler)
