@@ -10,27 +10,16 @@ import (
 
 var GormDB *gorm.DB
 
-type DBInterface interface {
-	Table(name string) *gorm.DB
-	Where(query interface{}, args ...interface{}) *gorm.DB
-	First(dest interface{}, conds ...interface{}) *gorm.DB
-	Update(column string, value interface{}) *gorm.DB
-}
-
 func InitDB() {
-	user := "postgres"
-	pass := ""
-	host := "localhost"
-	port := "5432"
-	dbname := "postgres"
-
-	// user := "postgres.xligbeekdwanyefeygjk"
-	// pass := "akusukangoding"
-	// host := "aws-0-ap-southeast-1.pooler.supabase.com"
+	// user := "postgres"
+	// pass := ""
+	// host := "localhost"
 	// port := "5432"
 	// dbname := "postgres"
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, user, pass, dbname, port)
+	// dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, user, pass, dbname, port)
+
+	dsn := "postgresql://postgres.drxrhvtcynjejjjmonay:akusukangoding@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
 
 	var err interface{}
 	GormDB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
