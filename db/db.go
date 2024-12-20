@@ -10,6 +10,13 @@ import (
 
 var GormDB *gorm.DB
 
+type DBInterface interface {
+	Table(name string) *gorm.DB
+	Where(query interface{}, args ...interface{}) *gorm.DB
+	First(dest interface{}, conds ...interface{}) *gorm.DB
+	Update(column string, value interface{}) *gorm.DB
+}
+
 func InitDB() {
 	user := "postgres"
 	pass := ""

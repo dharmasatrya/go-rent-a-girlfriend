@@ -25,8 +25,8 @@ type UserActivityLog struct {
 
 func GetClaimsFromToken(c echo.Context) (jwt.MapClaims, error) {
 	token, ok := c.Get("user").(*jwt.Token)
+	fmt.Println(token)
 	if !ok {
-		fmt.Println(ok)
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "Error Fetching Token")
 	}
 
