@@ -28,6 +28,7 @@ func CreateBooking(c echo.Context) error {
 
 	//bind req
 	if err := c.Bind(&req); err != nil {
+		fmt.Println(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
 	}
 

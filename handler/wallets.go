@@ -16,7 +16,7 @@ import (
 // @Tags wallet
 // @Accept json
 // @Produce json
-// @Param user body models.Wallet true "User wallet"
+// @Param user body models.CreateWalletRequest true "User wallet"
 // @Success 201 {object} models.Wallet
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string

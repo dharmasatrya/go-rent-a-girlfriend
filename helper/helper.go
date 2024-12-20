@@ -45,18 +45,18 @@ func IsValidURL(url string) bool {
 	return re.MatchString(url)
 }
 
-func ActivityLogger(userId uint, description string) bool {
-	log := UserActivityLog{
-		UserId:      userId,
-		Description: description,
-	}
+// func ActivityLogger(userId uint, description string) bool {
+// 	log := UserActivityLog{
+// 		UserId:      userId,
+// 		Description: description,
+// 	}
 
-	if err := db.GormDB.Debug().Create(&log).Error; err != nil {
-		return false
-	}
+// 	if err := db.GormDB.Debug().Create(&log).Error; err != nil {
+// 		return false
+// 	}
 
-	return true
-}
+// 	return true
+// }
 
 func UpdateGirlAvailability(girlID uint, startDate time.Time, numOfDays int) error {
 	endDate := startDate.AddDate(0, 0, numOfDays)

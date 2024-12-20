@@ -282,7 +282,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created rating details",
                         "schema": {
-                            "$ref": "#/definitions/models.Rating"
+                            "$ref": "#/definitions/models.GiveRatingRequest"
                         }
                     },
                     "400": {
@@ -402,22 +402,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "allOf": [
-                                    {
-                                        "type": "string"
-                                    },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "token": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
+                            "$ref": "#/definitions/models.LoginResponse"
                         }
                     },
                     "400": {
@@ -441,7 +426,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/profile/boy": {
+        "/users/profiles/boys": {
             "post": {
                 "security": [
                     {
@@ -474,7 +459,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.Boy"
+                            "$ref": "#/definitions/models.CreateBoyProfileRequest"
                         }
                     },
                     "400": {
@@ -507,7 +492,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/profile/girl": {
+        "/users/profiles/girls": {
             "post": {
                 "security": [
                     {
@@ -532,7 +517,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Girl"
+                            "$ref": "#/definitions/models.CreateGirlProfileRequest"
                         }
                     }
                 ],
@@ -593,7 +578,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.User"
+                            "$ref": "#/definitions/models.RegisterRequest"
                         }
                     }
                 ],
@@ -645,7 +630,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Wallet"
+                            "$ref": "#/definitions/models.CreateWalletRequest"
                         }
                     }
                 ],
@@ -897,6 +882,93 @@ const docTemplate = `{
                 }
             }
         },
+        "models.CreateBoyProfileRequest": {
+            "type": "object",
+            "required": [
+                "age",
+                "first_name",
+                "last_name"
+            ],
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 25
+                },
+                "bio": {
+                    "type": "string",
+                    "example": "I love traveling and meeting new people"
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "profile_picture_url": {
+                    "type": "string",
+                    "example": "https://example.com/profile.jpg"
+                }
+            }
+        },
+        "models.CreateGirlProfileRequest": {
+            "type": "object",
+            "required": [
+                "age",
+                "daily_rate",
+                "first_name",
+                "last_name"
+            ],
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 23
+                },
+                "bio": {
+                    "type": "string",
+                    "example": "I enjoy meeting new people"
+                },
+                "daily_rate": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "Jane"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "profile_picture_url": {
+                    "type": "string",
+                    "example": "https://example.com/profile.jpg"
+                }
+            }
+        },
+        "models.CreateWalletRequest": {
+            "type": "object",
+            "required": [
+                "bank_account_name",
+                "bank_account_number",
+                "bank_code"
+            ],
+            "properties": {
+                "bank_account_name": {
+                    "type": "string",
+                    "example": "Dharma Satrya"
+                },
+                "bank_account_number": {
+                    "type": "string",
+                    "example": "1234567890"
+                },
+                "bank_code": {
+                    "type": "string",
+                    "example": "BCA"
+                }
+            }
+        },
         "models.DepostitRequest": {
             "type": "object",
             "properties": {
@@ -954,6 +1026,27 @@ const docTemplate = `{
                 }
             }
         },
+        "models.GiveRatingRequest": {
+            "type": "object",
+            "required": [
+                "girl_id",
+                "stars"
+            ],
+            "properties": {
+                "girl_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "review": {
+                    "type": "string",
+                    "example": "Great experience!"
+                },
+                "stars": {
+                    "type": "integer",
+                    "example": 5
+                }
+            }
+        },
         "models.LoginRequestWithPassword": {
             "type": "object",
             "properties": {
@@ -964,6 +1057,15 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "example": "password123"
+                }
+            }
+        },
+        "models.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "example": "john@example.com"
                 }
             }
         },
@@ -994,6 +1096,33 @@ const docTemplate = `{
                 "stars": {
                     "type": "integer",
                     "example": 5
+                }
+            }
+        },
+        "models.RegisterRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "role",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john@example.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password123"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "boys"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "johndoe"
                 }
             }
         },

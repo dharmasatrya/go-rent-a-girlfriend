@@ -19,3 +19,9 @@ type Wallet struct {
 	UpdatedAt         time.Time      `json:"updated_at,omitempty" swaggerignore:"true" example:"2024-01-01T00:00:00Z"`
 	DeletedAt         gorm.DeletedAt `json:"deleted_at,omitempty" swaggerignore:"true" swaggertype:"string" example:"2024-01-01T00:00:00Z"`
 }
+
+type CreateWalletRequest struct {
+	BankCode          string `json:"bank_code" example:"BCA" binding:"required"`
+	BankAccountNumber string `json:"bank_account_number" example:"1234567890" binding:"required"`
+	BankAccountName   string `json:"bank_account_name" example:"Dharma Satrya" binding:"required"`
+}

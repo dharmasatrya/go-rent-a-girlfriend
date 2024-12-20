@@ -83,6 +83,70 @@ definitions:
     - last_name
     - user_id
     type: object
+  models.CreateBoyProfileRequest:
+    properties:
+      age:
+        example: 25
+        type: integer
+      bio:
+        example: I love traveling and meeting new people
+        type: string
+      first_name:
+        example: John
+        type: string
+      last_name:
+        example: Doe
+        type: string
+      profile_picture_url:
+        example: https://example.com/profile.jpg
+        type: string
+    required:
+    - age
+    - first_name
+    - last_name
+    type: object
+  models.CreateGirlProfileRequest:
+    properties:
+      age:
+        example: 23
+        type: integer
+      bio:
+        example: I enjoy meeting new people
+        type: string
+      daily_rate:
+        example: 100
+        type: integer
+      first_name:
+        example: Jane
+        type: string
+      last_name:
+        example: Doe
+        type: string
+      profile_picture_url:
+        example: https://example.com/profile.jpg
+        type: string
+    required:
+    - age
+    - daily_rate
+    - first_name
+    - last_name
+    type: object
+  models.CreateWalletRequest:
+    properties:
+      bank_account_name:
+        example: Dharma Satrya
+        type: string
+      bank_account_number:
+        example: "1234567890"
+        type: string
+      bank_code:
+        example: BCA
+        type: string
+    required:
+    - bank_account_name
+    - bank_account_number
+    - bank_code
+    type: object
   models.DepostitRequest:
     properties:
       amount:
@@ -125,6 +189,21 @@ definitions:
     - last_name
     - user_id
     type: object
+  models.GiveRatingRequest:
+    properties:
+      girl_id:
+        example: 1
+        type: integer
+      review:
+        example: Great experience!
+        type: string
+      stars:
+        example: 5
+        type: integer
+    required:
+    - girl_id
+    - stars
+    type: object
   models.LoginRequestWithPassword:
     properties:
       email:
@@ -132,6 +211,12 @@ definitions:
         type: string
       password:
         example: password123
+        type: string
+    type: object
+  models.LoginResponse:
+    properties:
+      token:
+        example: john@example.com
         type: string
     type: object
   models.Rating:
@@ -155,6 +240,26 @@ definitions:
     required:
     - girl_id
     - stars
+    type: object
+  models.RegisterRequest:
+    properties:
+      email:
+        example: john@example.com
+        type: string
+      password:
+        example: password123
+        type: string
+      role:
+        example: boys
+        type: string
+      username:
+        example: johndoe
+        type: string
+    required:
+    - email
+    - password
+    - role
+    - username
     type: object
   models.User:
     properties:
@@ -425,7 +530,7 @@ paths:
         "201":
           description: Created rating details
           schema:
-            $ref: '#/definitions/models.Rating'
+            $ref: '#/definitions/models.GiveRatingRequest'
         "400":
           description: Invalid request payload or rating value
           schema:
@@ -473,14 +578,7 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties:
-              allOf:
-              - type: string
-              - properties:
-                  token:
-                    type: string
-                type: object
-            type: object
+            $ref: '#/definitions/models.LoginResponse'
         "400":
           description: Bad Request
           schema:
@@ -496,7 +594,7 @@ paths:
       summary: Login user
       tags:
       - user
-  /users/profile/boy:
+  /users/profiles/boys:
     post:
       consumes:
       - application/json
@@ -514,7 +612,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.Boy'
+            $ref: '#/definitions/models.CreateBoyProfileRequest'
         "400":
           description: Bad Request
           schema:
@@ -538,7 +636,7 @@ paths:
       summary: Create boy profile
       tags:
       - profile
-  /users/profile/girl:
+  /users/profiles/girls:
     post:
       consumes:
       - application/json
@@ -549,7 +647,7 @@ paths:
         name: profile
         required: true
         schema:
-          $ref: '#/definitions/models.Girl'
+          $ref: '#/definitions/models.CreateGirlProfileRequest'
       produces:
       - application/json
       responses:
@@ -591,7 +689,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/models.RegisterRequest'
       produces:
       - application/json
       responses:
@@ -625,7 +723,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.Wallet'
+          $ref: '#/definitions/models.CreateWalletRequest'
       produces:
       - application/json
       responses:

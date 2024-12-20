@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"rent-a-girlfriend/db"
 	"rent-a-girlfriend/models"
@@ -95,7 +96,7 @@ func GetGirlById(c echo.Context) error {
 // @Produce json
 // @Security Bearer
 // @Param rating body models.Rating true "Rating and review details"
-// @Success 201 {object} models.Rating "Created rating details"
+// @Success 201 {object} models.GiveRatingRequest "Created rating details"
 // @Failure 400 {object} map[string]string "Invalid request payload or rating value"
 // @Failure 401 {object} map[string]string "Unauthorized - Invalid or missing token"
 // @Failure 403 {object} map[string]string "Forbidden - Can't rate without a prior booking"
@@ -105,6 +106,7 @@ func GiveRating(c echo.Context) error {
 	var review models.Rating
 
 	if err := c.Bind(&review); err != nil {
+		fmt.Println(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
 	}
 

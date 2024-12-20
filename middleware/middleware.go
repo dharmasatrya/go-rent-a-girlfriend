@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 	"rent-a-girlfriend/helper"
 
@@ -17,6 +18,7 @@ func RequireRole(role string) echo.MiddlewareFunc {
 
 			userRole := claims["user_role"].(string)
 			if userRole != role {
+				fmt.Println(userRole)
 				return echo.NewHTTPError(http.StatusForbidden, "Access denied")
 			}
 
