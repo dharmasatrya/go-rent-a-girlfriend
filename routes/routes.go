@@ -1,15 +1,23 @@
 package routes
 
 import (
+	"rent-a-girlfriend/controller"
 	"rent-a-girlfriend/handler"
+	repository "rent-a-girlfriend/repositories"
+	"rent-a-girlfriend/service"
 
 	m "rent-a-girlfriend/middleware"
 
 	echojwt "github.com/labstack/echo-jwt"
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
-func Init(e *echo.Echo) {
+func Init(e *echo.Echo, db *gorm.DB) {
+
+	gfr := repository.NewGirlfriendsRepository(db)
+	gs := service.NewGirlfriendService(gfr)
+	gfc := controller.NewGirlfriendController(gs)
 
 	u := e.Group("/users")
 	u.POST("/register", handler.UserRegister)
@@ -26,7 +34,7 @@ func Init(e *echo.Echo) {
 	g.Use(echojwt.JWT([]byte("secret")))
 	g.Use(m.RequireRole("boys"))
 	g.GET("", handler.GetAvailableGirls)
-	g.GET("/:id", handler.GetGirlById)
+	g.GET("/:id", gfc.GetGirlById)
 	g.POST("/ratings", handler.GiveRating)
 
 	b := e.Group("/bookings")

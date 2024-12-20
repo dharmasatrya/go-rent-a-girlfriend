@@ -1,17 +1,26 @@
 package handler
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"rent-a-girlfriend/db"
 	"rent-a-girlfriend/models"
+	repository "rent-a-girlfriend/repositories"
 	"strconv"
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 )
+
+type GirlfriendHandler struct {
+	gfRepo repository.GirlfriendsRepository
+}
+
+func NewGirlfriendHandler(gfRepo repository.GirlfriendsRepository) *GirlfriendHandler {
+	return &GirlfriendHandler{
+		gfRepo: gfRepo,
+	}
+}
 
 // GetAvailableGirls godoc
 // @Summary Get available girls with optional filtering
@@ -77,42 +86,51 @@ func GetAvailableGirls(c echo.Context) error {
 // @Failure 404 {object} map[string]string "Girl not found"
 // @Failure 500 {object} map[string]string "Server error"
 // @Router /girlfriends/{id} [get]
-func GetGirlById(c echo.Context) error {
-	girlId := c.Param("id")
-	var girl models.Girl
-	var availability models.Availability
-	var ratings []models.Rating
+// func (h *GirlfriendHandler) GetGirlById(c echo.Context) error {
+// 	girlIdStr := c.Param("id")
+// girlId, err := strconv.Atoi(girlIdStr)
+// 	if err != nil {
+// 		return echo.NewHTTPError(http.StatusBadRequest, "error converting string")
+// 	}
+// 	// var girl models.Girl
+// 	// var availability models.Availability
+// 	// var ratings []models.Rating
 
-	if err := db.GormDB.Where("id = ?", girlId).First(&girl).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return echo.NewHTTPError(http.StatusNotFound, "Girl not found")
-		}
-		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching girl profile")
-	}
+// 	girlData, err := h.gfRepo.GetGirlfriendById(girlId)
 
-	if err := db.GormDB.Where("girl_id = ?", girlId).First(&availability).Error; err != nil {
-		availability.IsAvailable = false
-	}
+// 	if err != nil {
+// 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
+// 	}
+// 	// if err := h.db.Where("id = ?", girlId).First(&girl).Error; err != nil {
+// 	// 	if errors.Is(err, gorm.ErrRecordNotFound) {
+// 	// 		return echo.NewHTTPError(http.StatusNotFound, "Girl not found")
+// 	// 	}
+// 	// 	return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching girl profile")
+// 	// }
 
-	if err := db.GormDB.Where("girl_id = ?", girlId).Find(&ratings).Error; err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching ratings")
-	}
+// 	// if err := h.db.Where("girl_id = ?", girlId).First(&availability).Error; err != nil {
+// 	// 	availability.IsAvailable = false
+// 	// }
 
-	response := models.GirlDetailResponse{
-		ID:                girl.ID,
-		UserID:            girl.UserID,
-		FirstName:         girl.FirstName,
-		LastName:          girl.LastName,
-		Age:               girl.Age,
-		ProfilePictureURL: girl.ProfilePictureURL,
-		Bio:               girl.Bio,
-		DailyRate:         girl.DailyRate,
-		IsAvailable:       availability.IsAvailable,
-		Ratings:           ratings,
-	}
+// 	// if err := h.db.Where("girl_id = ?", girlId).Find(&ratings).Error; err != nil {
+// 	// 	return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching ratings")
+// 	// }
 
-	return c.JSON(http.StatusOK, response)
-}
+// 	// response := models.GirlDetailResponse{
+// 	// 	ID:                girl.ID,
+// 	// 	UserID:            girl.UserID,
+// 	// 	FirstName:         girl.FirstName,
+// 	// 	LastName:          girl.LastName,
+// 	// 	Age:               girl.Age,
+// 	// 	ProfilePictureURL: girl.ProfilePictureURL,
+// 	// 	Bio:               girl.Bio,
+// 	// 	DailyRate:         girl.DailyRate,
+// 	// 	IsAvailable:       availability.IsAvailable,
+// 	// 	Ratings:           ratings,
+// 	// }
+
+// 	return c.JSON(http.StatusOK, girlData)
+// }
 
 // GiveRating godoc
 // @Summary Submit a rating and review for a girl

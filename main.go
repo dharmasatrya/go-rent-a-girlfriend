@@ -41,6 +41,11 @@ func main() {
 	db.InitDB()
 	cron.InitAvailabilityCron()
 
+	newDb, errdb := db.InitDBNew()
+	if errdb != nil {
+		log.Fatalf("Failed to initialize database: %v", errdb)
+	}
+
 	defer func() {
 		log.Println("Closing database connection...")
 		db.CloseDB()
@@ -62,7 +67,7 @@ func main() {
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	routes.Init(e)
+	routes.Init(e, newDb)
 
 	port := os.Getenv("PORT")
 	if port == "" {

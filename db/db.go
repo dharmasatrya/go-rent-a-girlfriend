@@ -39,6 +39,28 @@ func InitDB() {
 	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 }
 
+func InitDBNew() (*gorm.DB, error) {
+	dsn := "postgresql://postgres.drxrhvtcynjejjjmonay:akusukangoding@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to database: %v", err)
+	}
+
+	sqlDB, err := db.DB()
+	if err != nil {
+		return nil, fmt.Errorf("error fetching database object: %v", err)
+	}
+
+	// Set connection pool settings
+	sqlDB.SetMaxIdleConns(3)
+	sqlDB.SetMaxOpenConns(5)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
+
+	fmt.Println("Database connected successfully!")
+	return db, nil
+}
+
 func CloseDB() {
 	if GormDB == nil {
 		fmt.Println("No active database connection to close.")
