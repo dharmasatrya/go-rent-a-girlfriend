@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"rent-a-girlfriend/db"
@@ -9,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 // GetAvailableGirls godoc
@@ -71,21 +73,45 @@ func GetAvailableGirls(c echo.Context) error {
 // @Accept json
 // @Produce json
 // @Param id path int true "Girl ID" example:"1"
-// @Success 200 {object} models.Girl "Girl profile details"
+// @Success 200 {object} models.GirlDetailResponse "Girl profile details"
 // @Failure 404 {object} map[string]string "Girl not found"
 // @Failure 500 {object} map[string]string "Server error"
 // @Router /girlfriends/{id} [get]
 func GetGirlById(c echo.Context) error {
 	girlId := c.Param("id")
 	var girl models.Girl
+	var availability models.Availability
+	var ratings []models.Rating
 
-	if err := db.GormDB.
-		Where("id", girlId).
-		First(&girl).Error; err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching girl by id")
+	if err := db.GormDB.Where("id = ?", girlId).First(&girl).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return echo.NewHTTPError(http.StatusNotFound, "Girl not found")
+		}
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching girl profile")
 	}
 
-	return c.JSON(http.StatusOK, girl)
+	if err := db.GormDB.Where("girl_id = ?", girlId).First(&availability).Error; err != nil {
+		availability.IsAvailable = false
+	}
+
+	if err := db.GormDB.Where("girl_id = ?", girlId).Find(&ratings).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Error fetching ratings")
+	}
+
+	response := models.GirlDetailResponse{
+		ID:                girl.ID,
+		UserID:            girl.UserID,
+		FirstName:         girl.FirstName,
+		LastName:          girl.LastName,
+		Age:               girl.Age,
+		ProfilePictureURL: girl.ProfilePictureURL,
+		Bio:               girl.Bio,
+		DailyRate:         girl.DailyRate,
+		IsAvailable:       availability.IsAvailable,
+		Ratings:           ratings,
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
 
 // GiveRating godoc

@@ -95,11 +95,15 @@ type GiveRatingRequest struct {
 	Stars  int    `json:"stars" example:"5" binding:"required"`
 }
 
-type CreateGirlProfileRequest struct {
-	FirstName         string `json:"first_name" example:"Jane" binding:"required"`
-	LastName          string `json:"last_name" example:"Doe" binding:"required"`
-	Age               int    `json:"age" example:"23" binding:"required"`
-	ProfilePictureURL string `json:"profile_picture_url" example:"https://example.com/profile.jpg"`
-	Bio               string `json:"bio" example:"I enjoy meeting new people"`
-	DailyRate         int    `json:"daily_rate" example:"100" binding:"required"`
+type GirlDetailResponse struct {
+	ID                uint     `json:"id"`
+	UserID            uint     `json:"user_id"`
+	FirstName         string   `json:"first_name"`
+	LastName          string   `json:"last_name"`
+	Age               int      `json:"age"`
+	ProfilePictureURL string   `json:"profile_picture_url"`
+	Bio               string   `json:"bio"`
+	DailyRate         int      `json:"daily_rate"`
+	IsAvailable       bool     `json:"is_available"`
+	Ratings           []Rating `json:"ratings"`
 }
