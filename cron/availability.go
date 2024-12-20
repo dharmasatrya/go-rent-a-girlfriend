@@ -16,7 +16,7 @@ func InitAvailabilityCron() {
 	c := cron.New(cron.WithLocation(jakartaTime))
 
 	// Run every day at midnight
-	_, err := c.AddFunc("0 0 * * *", updateAvailabilityStatus)
+	_, err := c.AddFunc("0 0 0 * *", updateAvailabilityStatus)
 	if err != nil {
 		panic("Failed to initialize availability cron job: " + err.Error())
 	}
