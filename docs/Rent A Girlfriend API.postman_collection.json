@@ -1,0 +1,2503 @@
+{
+	"info": {
+		"_postman_id": "59db6b2e-fa94-41c9-90bd-83d2aee6bed1",
+		"name": "Rent A Girlfriend API",
+		"description": "This is a girlfriend rental service API\n\nContact Support:\n Name: API Support\n Email: support@swagger.io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "16908675"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "Login user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"dharmasatrya1101@gmail.com\",\n  \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users/login",
+								"description": "Authenticates a user and returns a JWT token"
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/login"
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/login"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Server Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/login"
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Login user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"dharma1011@gmail.com\",\n  \"password\": \"password\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/login"
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 20 Dec 2024 01:36:00 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "182"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTc3NjAsInVzZXJfaWQiOjExLCJ1c2VyX3JvbGUiOiJkaGFybWExMDExQGdtYWlsLmNvbSJ9.xpO00cCk1NLZFg5DU-kvqDnfCw57PA9s91pCnVH8bT0\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "register",
+					"item": [
+						{
+							"name": "Register a new user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"dharmasatryaa@gmail.com\",\n  \"password\": \"password\",\n  \"role\": \"boys\",\n  \"username\": \"dharmasatrya\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users/register",
+								"description": "Registers a new user with username, email, password and role"
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"role\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/register"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"email\": \"<string>\",\n  \"role\": \"<string>\",\n  \"username\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\"\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"role\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/register"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Server Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"role\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/register"
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Register a new user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"dharma1011@gmail.com\",\n  \"password\": \"password\",\n  \"role\": \"boys\",\n  \"username\": \"dharnit12\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/register"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 20 Dec 2024 01:34:29 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "190"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 11,\n    \"username\": \"dharnit12\",\n    \"email\": \"dharma1011@gmail.com\",\n    \"role\": \"dharma1011@gmail.com\",\n    \"created_at\": \"2024-12-20T08:34:29.337693+07:00\",\n    \"updated_at\": \"2024-12-20T08:34:29.337693+07:00\"\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "bookings",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Cancel an existing booking",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"key": "Authorization",
+										"value": "{{apiKey}}",
+										"in": "header"
+									}
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/bookings/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"bookings",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<integer>",
+											"description": "(Required) Booking ID to cancel"
+										}
+									]
+								},
+								"description": "Cancels a booking if it belongs to the authenticated user. Only the boy who made the booking can cancel it."
+							},
+							"response": [
+								{
+									"name": "Cancelled booking details",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"booking_date\": \"<string>\",\n  \"boy_user_id\": \"<integer>\",\n  \"girl_user_id\": \"<integer>\",\n  \"num_of_days\": \"<integer>\",\n  \"total_cost\": \"<integer>\",\n  \"boy\": {\n    \"age\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"user_id\": \"<integer>\",\n    \"bio\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"id\": \"<integer>\",\n    \"profile_picture_url\": \"<string>\"\n  },\n  \"created_at\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"girl\": {\n    \"age\": \"<integer>\",\n    \"daily_rate\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"user_id\": \"<integer>\",\n    \"bio\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"id\": \"<integer>\",\n    \"profile_picture_url\": \"<string>\"\n  },\n  \"id\": \"<integer>\",\n  \"updated_at\": \"<string>\"\n}"
+								},
+								{
+									"name": "Invalid booking ID",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Unauthorized - Invalid or missing token",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Forbidden - Not your booking",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Booking not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Server error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "get all booking of a user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{baseUrl}}/bookings",
+						"description": "get all booking of a user"
+					},
+					"response": [
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/bookings"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"booking_date\": \"<string>\",\n    \"boy_user_id\": \"<integer>\",\n    \"girl_user_id\": \"<integer>\",\n    \"num_of_days\": \"<integer>\",\n    \"total_cost\": \"<integer>\",\n    \"boy\": {\n      \"age\": \"<integer>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"user_id\": \"<integer>\",\n      \"bio\": \"<string>\",\n      \"deleted_at\": \"<dateTime>\",\n      \"id\": \"<integer>\",\n      \"profile_picture_url\": \"<string>\"\n    },\n    \"created_at\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"girl\": {\n      \"age\": \"<integer>\",\n      \"daily_rate\": \"<integer>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"user_id\": \"<integer>\",\n      \"bio\": \"<string>\",\n      \"deleted_at\": \"<dateTime>\",\n      \"id\": \"<integer>\",\n      \"profile_picture_url\": \"<string>\"\n    },\n    \"id\": \"<integer>\",\n    \"updated_at\": \"<string>\"\n  },\n  {\n    \"booking_date\": \"<string>\",\n    \"boy_user_id\": \"<integer>\",\n    \"girl_user_id\": \"<integer>\",\n    \"num_of_days\": \"<integer>\",\n    \"total_cost\": \"<integer>\",\n    \"boy\": {\n      \"age\": \"<integer>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"user_id\": \"<integer>\",\n      \"bio\": \"<string>\",\n      \"deleted_at\": \"<dateTime>\",\n      \"id\": \"<integer>\",\n      \"profile_picture_url\": \"<string>\"\n    },\n    \"created_at\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"girl\": {\n      \"age\": \"<integer>\",\n      \"daily_rate\": \"<integer>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"user_id\": \"<integer>\",\n      \"bio\": \"<string>\",\n      \"deleted_at\": \"<dateTime>\",\n      \"id\": \"<integer>\",\n      \"profile_picture_url\": \"<string>\"\n    },\n    \"id\": \"<integer>\",\n    \"updated_at\": \"<string>\"\n  }\n]"
+						},
+						{
+							"name": "Internal Server Error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/bookings"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Book a new date",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTgyMjUsInVzZXJfaWQiOjEyLCJ1c2VyX3JvbGUiOiJib3lzIn0.TjRrtug-SjII35gYAl1Oxgobh7mu6vFNpkcwpOxl-9I"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"booking_date\": \"2024-12-20T08:51:53.800509+07:00\",\n  \"girl_id\": 4,\n  \"num_of_days\": 1\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/bookings",
+						"description": "Book a date"
+					},
+					"response": [
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"booking_date\": \"<string>\",\n  \"girl_id\": \"<integer>\",\n  \"num_of_days\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/bookings"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"booking_date\": \"<string>\",\n  \"boy_user_id\": \"<integer>\",\n  \"girl_user_id\": \"<integer>\",\n  \"num_of_days\": \"<integer>\",\n  \"total_cost\": \"<integer>\",\n  \"boy\": {\n    \"age\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"user_id\": \"<integer>\",\n    \"bio\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"id\": \"<integer>\",\n    \"profile_picture_url\": \"<string>\"\n  },\n  \"created_at\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"girl\": {\n    \"age\": \"<integer>\",\n    \"daily_rate\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"user_id\": \"<integer>\",\n    \"bio\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"id\": \"<integer>\",\n    \"profile_picture_url\": \"<string>\"\n  },\n  \"id\": \"<integer>\",\n  \"updated_at\": \"<string>\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"booking_date\": \"<string>\",\n  \"girl_id\": \"<integer>\",\n  \"num_of_days\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/bookings"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						},
+						{
+							"name": "Internal Server Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"booking_date\": \"<string>\",\n  \"girl_id\": \"<integer>\",\n  \"num_of_days\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/bookings"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "girlfriends",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Get a specific girl's profile by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTgyMjUsInVzZXJfaWQiOjEyLCJ1c2VyX3JvbGUiOiJib3lzIn0.TjRrtug-SjII35gYAl1Oxgobh7mu6vFNpkcwpOxl-9I"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/girlfriends/1",
+								"description": "Retrieves detailed information about a girl's profile using their ID"
+							},
+							"response": [
+								{
+									"name": "Girl profile details",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/girlfriends/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"girlfriends",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"age\": \"<integer>\",\n  \"daily_rate\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}"
+								},
+								{
+									"name": "Girl not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/girlfriends/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"girlfriends",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Server error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/girlfriends/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"girlfriends",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get available girls with optional filtering",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTgyMjUsInVzZXJfaWQiOjEyLCJ1c2VyX3JvbGUiOiJib3lzIn0.TjRrtug-SjII35gYAl1Oxgobh7mu6vFNpkcwpOxl-9I"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/girlfriends?date=2024-01-01&age=25",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"girlfriends"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-01-01",
+									"description": "Date to check availability (format: 2024-01-01)"
+								},
+								{
+									"key": "age",
+									"value": "25",
+									"description": "Filter by specific age"
+								}
+							]
+						},
+						"description": "Retrieves a list of available girls. Can be filtered by date and age. If no filters are provided, returns all available girls."
+					},
+					"response": [
+						{
+							"name": "List of available girls",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/girlfriends?date=<string>&age=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"girlfriends"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "<string>",
+											"description": "Date to check availability (format: 2024-01-01)"
+										},
+										{
+											"key": "age",
+											"value": "<string>",
+											"description": "Filter by specific age"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"age\": \"<integer>\",\n    \"daily_rate\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"user_id\": \"<integer>\",\n    \"bio\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"id\": \"<integer>\",\n    \"profile_picture_url\": \"<string>\"\n  },\n  {\n    \"age\": \"<integer>\",\n    \"daily_rate\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"user_id\": \"<integer>\",\n    \"bio\": \"<string>\",\n    \"deleted_at\": \"<dateTime>\",\n    \"id\": \"<integer>\",\n    \"profile_picture_url\": \"<string>\"\n  }\n]"
+						},
+						{
+							"name": "Invalid age parameter",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/girlfriends?date=<string>&age=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"girlfriends"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "<string>",
+											"description": "Date to check availability (format: 2024-01-01)"
+										},
+										{
+											"key": "age",
+											"value": "<string>",
+											"description": "Filter by specific age"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						},
+						{
+							"name": "Server error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/girlfriends?date=<string>&age=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"girlfriends"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "<string>",
+											"description": "Date to check availability (format: 2024-01-01)"
+										},
+										{
+											"key": "age",
+											"value": "<string>",
+											"description": "Filter by specific age"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ratings",
+			"item": [
+				{
+					"name": "Submit a rating and review for a girl",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTgyMjUsInVzZXJfaWQiOjEyLCJ1c2VyX3JvbGUiOiJib3lzIn0.TjRrtug-SjII35gYAl1Oxgobh7mu6vFNpkcwpOxl-9I"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"girl_id\": 1,\n  \"stars\": 4,\n  \"review\": \"wangy\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/girlfriends/ratings",
+						"description": "Allows users to submit ratings (1-5 stars) and written reviews for girls they have booked"
+					},
+					"response": [
+						{
+							"name": "Created rating details",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "Authorization",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"girl_id\": \"<integer>\",\n  \"stars\": \"<integer>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"review\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/girlfriends/ratings"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"girl_id\": \"<integer>\",\n  \"stars\": \"<integer>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"review\": \"<string>\"\n}"
+						},
+						{
+							"name": "Invalid request payload or rating value",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "Authorization",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"girl_id\": \"<integer>\",\n  \"stars\": \"<integer>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"review\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/girlfriends/ratings"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						},
+						{
+							"name": "Unauthorized - Invalid or missing token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "Authorization",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"girl_id\": \"<integer>\",\n  \"stars\": \"<integer>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"review\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/girlfriends/ratings"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						},
+						{
+							"name": "Forbidden - Can't rate without a prior booking",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "Authorization",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"girl_id\": \"<integer>\",\n  \"stars\": \"<integer>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"review\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/girlfriends/ratings"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						},
+						{
+							"name": "Server error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "Authorization",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"girl_id\": \"<integer>\",\n  \"stars\": \"<integer>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"review\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/girlfriends/ratings"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "profile",
+			"item": [
+				{
+					"name": "boy",
+					"item": [
+						{
+							"name": "Create boy profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTgyMjUsInVzZXJfaWQiOjEyLCJ1c2VyX3JvbGUiOiJib3lzIn0.TjRrtug-SjII35gYAl1Oxgobh7mu6vFNpkcwpOxl-9I"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"age\": 20,\n  \"first_name\": \"dharma\",\n  \"last_name\": \"dua\",\n  \"bio\": \"aku suka main\",\n  \"profile_picture_url\": \"url foto\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users/profiles/boys",
+								"description": "Creates a profile for a boy user"
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/boy"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"age\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/boy"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/boy"
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Server Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/boy"
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Create boy profile",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": 20,\n  \"first_name\": \"dharma\",\n  \"last_name\": \"dua\",\n  \"bio\": \"aku suka main\",\n  \"profile_picture_url\": \"url foto\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profiles/boys"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 20 Dec 2024 01:43:52 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "220"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 2,\n    \"user_id\": 12,\n    \"first_name\": \"dharma\",\n    \"last_name\": \"dua\",\n    \"age\": 20,\n    \"profile_picture_url\": \"url foto\",\n    \"bio\": \"aku suka main\",\n    \"created_at\": \"2024-12-20T08:43:52.40815+07:00\",\n    \"updated_at\": \"2024-12-20T08:43:52.40815+07:00\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "girl",
+					"item": [
+						{
+							"name": "Create girl profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTkzMTEsInVzZXJfaWQiOjEzLCJ1c2VyX3JvbGUiOiJnaXJscyJ9.1baJf9wyWU_8rlyWLa-Z3uKRUP4iLMLje5_h5QiOj8k"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"age\": 30,\n  \"daily_rate\": 500000,\n  \"first_name\": \"cewe\",\n  \"last_name\": \"cantik\",\n  \"bio\": \"aku cewe cantik\",\n  \"profile_picture_url\": \"url\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users/profiles/girls",
+								"description": "Creates a profile for a girl user"
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"daily_rate\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/girl"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"age\": \"<integer>\",\n  \"daily_rate\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"daily_rate\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/girl"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"daily_rate\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/girl"
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Server Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "Authorization",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"age\": \"<integer>\",\n  \"daily_rate\": \"<integer>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"bio\": \"<string>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"id\": \"<integer>\",\n  \"profile_picture_url\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/profile/girl"
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "wallets",
+			"item": [
+				{
+					"name": "deposit",
+					"item": [
+						{
+							"name": "Create a deposit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amount\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/wallets/deposit",
+								"description": "Create a deposit"
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/wallets/deposit"
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"bank_account_name\": \"<string>\",\n  \"bank_account_number\": \"<string>\",\n  \"bank_code\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"balance\": \"<integer>\",\n  \"id\": \"<integer>\"\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/wallets/deposit"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Server Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/wallets/deposit"
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "withdrawal",
+					"item": [
+						{
+							"name": "Create a withdrawal",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTkzMTEsInVzZXJfaWQiOjEzLCJ1c2VyX3JvbGUiOiJnaXJscyJ9.1baJf9wyWU_8rlyWLa-Z3uKRUP4iLMLje5_h5QiOj8k"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amount\": 150000\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/wallets/withdrawal",
+								"description": "Create a withdrawal"
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/wallets/withdrawal"
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"bank_account_name\": \"<string>\",\n  \"bank_account_number\": \"<string>\",\n  \"bank_code\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"balance\": \"<integer>\",\n  \"id\": \"<integer>\"\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/wallets/withdrawal"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Server Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/wallets/withdrawal"
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Create a wallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzQ5MTgyMjUsInVzZXJfaWQiOjEyLCJ1c2VyX3JvbGUiOiJib3lzIn0.TjRrtug-SjII35gYAl1Oxgobh7mu6vFNpkcwpOxl-9I"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bank_account_name\": \"dharma test\",\n  \"bank_account_number\": \"123456789\",\n  \"bank_code\": \"BRI\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/wallets",
+						"description": "Registers a new wallet"
+					},
+					"response": [
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"bank_account_name\": \"<string>\",\n  \"bank_account_number\": \"<string>\",\n  \"bank_code\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"balance\": \"<integer>\",\n  \"id\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/wallets"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"bank_account_name\": \"<string>\",\n  \"bank_account_number\": \"<string>\",\n  \"bank_code\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"balance\": \"<integer>\",\n  \"id\": \"<integer>\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"bank_account_name\": \"<string>\",\n  \"bank_account_number\": \"<string>\",\n  \"bank_code\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"balance\": \"<integer>\",\n  \"id\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/wallets"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						},
+						{
+							"name": "Internal Server Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"bank_account_name\": \"<string>\",\n  \"bank_account_number\": \"<string>\",\n  \"bank_code\": \"<string>\",\n  \"user_id\": \"<integer>\",\n  \"balance\": \"<integer>\",\n  \"id\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/wallets"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"labore8da\": \"<string>\",\n  \"do0a3\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "callback",
+			"item": [
+				{
+					"name": "Invoice callback",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"id\": \"593f4ed1c3d3bb7f39733d83\",\n      \"external_id\": \"U0Za5JnINR9yaPOpetfdn\",\n      \"user_id\": \"5848fdf860053555135587e7\",\n      \"is_high\": false,\n      \"payment_method\": \"BANK_TRANSFER\",\n      \"status\": \"PAID\",\n      \"merchant_name\": \"Xendit\",\n      \"amount\": 2000000,\n      \"paid_amount\": 2000000,\n      \"bank_code\": \"MANDIRI\",\n      \"paid_at\": \"2020-01-14T02:32:50.912Z\",\n      \"payer_email\": \"test@xendit.co\",\n      \"description\": \"Invoice webhook test\",\n      \"created\": \"2020-01-13T02:32:49.827Z\",\n      \"updated\": \"2020-01-13T02:32:50.912Z\",\n      \"currency\": \"IDR\",\n      \"payment_channel\": \"MANDIRI\",\n      \"payment_destination\": \"8458478548758748\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/xenditcallback/invoice"
+					},
+					"response": []
+				},
+				{
+					"name": "disbursement callback",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"57e214ba82b034c325e84d6e\",\n    \"created\": \"2021-07-10T08:15:03.404Z\",\n    \"updated\": \"2021-07-10T08:15:03.404Z\",\n    \"external_id\": \"mrwc_oL8jRW2Tm07ts4gO\",\n    \"user_id\": \"57c5aa7a36e3b6a709b6e148\",\n    \"amount\": 150000,\n    \"bank_code\": \"BCA\",\n    \"account_holder_name\": \"MICHAEL CHEN\",\n    \"disbursement_description\": \"Refund for shoes\",\n    \"status\": \"COMPLETED\",\n    \"is_instant\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/xenditcallback/disbursement"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
