@@ -33,7 +33,7 @@ func TestGetGirlfriendById(t *testing.T) {
 	}
 
 	// Mock the GetAllRooms call to return the mockRooms
-	girlfriendRepoMock.Mock.On("GetGirlfriendById").Return(&mockGirl, nil).Once()
+	girlfriendRepoMock.Mock.On("GetGirlfriendById", 1).Return(&mockGirl, nil).Once()
 
 	// Call the service method
 	status, response := testGirlfriendService.GetGirlfriendById(int(mockGirl.ID))
@@ -43,4 +43,29 @@ func TestGetGirlfriendById(t *testing.T) {
 	assert.Equal(t, "Successfully getting girl", response["message"])
 	assert.NotNil(t, response["data"])
 	assert.Equal(t, &mockGirl, response["data"])
+}
+
+func TestCreateRating(t *testing.T) {
+	// Mock the response for successful rating creation
+	mockRating := models.Rating{
+		GirlID:    1,
+		Review:    "aaaaaa",
+		Stars:     3,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+
+	// Mock the CreateRating call to return the mockRating
+	girlfriendRepoMock.Mock.On("CreateRating", &mockRating).Return(&mockRating, nil).Once()
+
+	// Call the service method
+	status, response := testGirlfriendService.CreateRating(&mockRating)
+
+	// Assertions
+	assert.Equal(t, http.StatusOK, status)
+	assert.Equal(t, "Successfully created rating", response["message"])
+	assert.NotNil(t, response["data"])
+
+	// Compare the pointers directly
+	assert.Equal(t, mockRating, response["data"])
 }

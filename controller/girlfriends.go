@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"fmt"
+	"net/http"
+	"rent-a-girlfriend/models"
 	"rent-a-girlfriend/service"
 	"strconv"
 
@@ -21,6 +24,19 @@ func (h *girlfriendController) GetGirlById(c echo.Context) error {
 	girlIdStr := c.Param("id")
 	girlId, _ := strconv.Atoi(girlIdStr)
 	status, webResponse := h.girlfriendService.GetGirlfriendById(girlId)
+
+	return c.JSON(status, webResponse)
+}
+
+func (h *girlfriendController) CreateRating(c echo.Context) error {
+	var rating models.Rating
+
+	if err := c.Bind(&rating); err != nil {
+		fmt.Println(err)
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
+	}
+
+	status, webResponse := h.girlfriendService.CreateRating(&rating)
 
 	return c.JSON(status, webResponse)
 }

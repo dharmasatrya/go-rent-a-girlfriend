@@ -8,6 +8,7 @@ import (
 
 type GirlfriendsRepository interface {
 	GetGirlfriendById(userID int) (*models.Girl, error)
+	CreateRating(rating *models.Rating) (*models.Rating, error)
 }
 
 type girlfriendsRepository struct {
@@ -26,4 +27,13 @@ func (r *girlfriendsRepository) GetGirlfriendById(userID int) (*models.Girl, err
 	}
 
 	return &girl, nil
+}
+
+func (r *girlfriendsRepository) CreateRating(rating *models.Rating) (*models.Rating, error) {
+
+	if err := r.db.Create(&rating).Error; err != nil {
+		return nil, err
+	}
+
+	return rating, nil
 }
